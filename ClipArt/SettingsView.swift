@@ -10,27 +10,22 @@ struct SettingsView: View {
     var body: some View {
         Form {
             Section(header: Text("Shortcuts")) {
-                HStack {
-                    Text("Open Clip List:")
+                LabeledContent("Open Clip List:") {
                     TextField("Shortcut", text: $openListShortcut)
                 }
-                HStack {
-                    Text("Previous Clip:")
+                LabeledContent("Previous Clip:") {
                     TextField("Shortcut", text: $previousClipShortcut)
                 }
-                HStack {
-                    Text("Next Clip:")
+                LabeledContent("Next Clip:") {
                     TextField("Shortcut", text: $nextClipShortcut)
                 }
             }
         }
         .padding()
-        .frame(width: 300, height: 200)
+        .frame(width: 400, height: 200)
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
-    }
+#Preview {
+    SettingsView()
 }
