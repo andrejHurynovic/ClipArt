@@ -4,6 +4,7 @@ import SwiftUI
 
 struct ClipListView: View {
     @EnvironmentObject var clipboardManager: ClipboardManager
+    @Environment(\.dismissWindow) private var dismissWindow
     @State private var selectedClipID: UUID? = nil
     
     var body: some View {
@@ -18,6 +19,9 @@ struct ClipListView: View {
             .onAppear {
                 registerCopyShortcut()
             }
+            .onDisappear {
+                dismissWindow()
+            }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.gray.opacity(0.1))
         }
@@ -28,6 +32,7 @@ struct ClipListView: View {
             if event.modifierFlags.contains(.command) && event.keyCode == 8 { // Command + C
                 if let selectedClip = clipboardManager.clips.first(where: { $0.id == selectedClipID }) {
                     clipboardManager.insertClip(selectedClip, withPaste: false)
+                    dismissWindow()
                 }
                 return nil
             }

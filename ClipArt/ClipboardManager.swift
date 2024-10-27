@@ -7,7 +7,6 @@
 
 import AppKit
 
-@Observable
 class ClipboardManager: ObservableObject {
     var clips: [Clip] = []
     
