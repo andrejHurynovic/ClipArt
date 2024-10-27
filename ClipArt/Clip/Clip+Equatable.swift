@@ -7,6 +7,6 @@
 
 extension Clip: Equatable {
     static func == (lhs: Clip, rhs: Clip) -> Bool {
-        return lhs.id == rhs.id && lhs.type == rhs.type
+        return lhs.id == rhs.id
     }
 }

@@ -1,10 +1,10 @@
-//ContentView.swift
+//MenuBarContent.swift
 
 import SwiftUI
 import Cocoa
 
-struct ContentView: View {
-    @ObservedObject var clipboardManager = ClipboardManager()
+struct MenuBarContent: View {
+    @EnvironmentObject var clipboardManager: ClipboardManager
     @State private var previewWindowController: PreviewWindowController?
     @State private var isCtrlShiftPressed = false
     @State private var currentClip: Clip?
@@ -18,7 +18,8 @@ struct ContentView: View {
                  }*/
                 
                 // The Clip List is now integrated into the main screen
-                ClipListView(clipboardManager: clipboardManager)
+                ClipListView()
+                    .environmentObject(clipboardManager)
             }
             .onAppear {
                 registerHotKeys()
@@ -72,7 +73,7 @@ struct ContentView: View {
     
     func closePreviewWindowAndPaste() {
         if let clip = currentClip {
-            clipboardManager.pasteClip(clip)
+            clipboardManager.insertClip(clip, withPaste: true)
         }
         
         previewWindowController?.closeWindow()
@@ -109,4 +110,8 @@ extension NSEvent {
         
         return self.keyCode == keyCode && self.modifierFlags.isSuperset(of: modifierFlags)
     }
+}
+
+#Preview {
+    MenuBarContent()
 }

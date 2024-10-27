@@ -5,10 +5,11 @@
 //  Created by Andrej Hurynovič on 27.10.2024.
 //
 
-import Foundation
+import AppKit
 
 struct Clip: Identifiable {
     let id = UUID()
-    let content: Any
-    let type: String
+    let type: NSPasteboard.PasteboardType
+    let content: Data
+    let description: String?
 }

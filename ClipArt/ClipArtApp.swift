@@ -9,8 +9,11 @@ import SwiftUI
 @main
 struct ClipArtApp: App {
     var body: some Scene {
+        let clipboardManager = ClipboardManager()
+        
         MenuBarExtra("ClipArt", systemImage: "clipboard") {
-            ContentView()
+            MenuBarContent()
+                .environmentObject(clipboardManager)
         }
         .menuBarExtraStyle(.window)
     }

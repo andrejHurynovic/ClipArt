@@ -1,12 +1,13 @@
 //PreviewWindowController.swift
 
 import Cocoa
+import AppKit
 import SwiftUI
 
 class PreviewWindowController: NSWindowController {
     
     init() {
-        let view = PreviewContentView()
+        let view = ClipView()
         let hostingController = NSHostingController(rootView: view)
         let window = NSWindow(contentViewController: hostingController)
         window.title = "ClipArt" // Set the title here
@@ -22,7 +23,7 @@ class PreviewWindowController: NSWindowController {
     }
     
     func updateContent(with clip: Clip) {
-        if let viewController = window?.contentViewController as? NSHostingController<PreviewContentView> {
+        if let viewController = window?.contentViewController as? NSHostingController<ClipView> {
             viewController.rootView.clip = clip
         }
     }
@@ -33,37 +34,5 @@ class PreviewWindowController: NSWindowController {
     
     func closeWindow() {
         window?.close()
-    }
-}
-
-struct PreviewContentView: View {
-    var clip: Clip?
-var body: some View {
-        VStack {
-            if let clip = clip {
-                if clip.type == "text" {
-                    Text(clip.content as? String ?? "")
-                        .padding()
-                        .frame(width: 300, height: 200)
-                } else if clip.type.contains("image"), let image = clip.content as? NSImage {
-                    Image(nsImage: image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 300, height: 200)
-                } else if let data = clip.content as? Data {
-                    Text("Data: \(clip.type)")
-                        .padding()
-                        .frame(width: 300, height: 200)
-                } else {
-                    Text("Unsupported content")
-                        .padding()
-                        .frame(width: 300, height: 200)
-                }
-            } else {
-                Text("No clip to preview")
-                    .padding()
-                    .frame(width: 300, height: 200)
-            }
-        }
     }
 }
