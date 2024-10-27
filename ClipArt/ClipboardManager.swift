@@ -1,21 +1,22 @@
 //ClipboardManager.swift
 
-import Foundation
 import AppKit
 
 class ClipboardManager: ObservableObject {
     @Published var clips: [Clip] = []
+    
     private var lastChangeCount = NSPasteboard.general.changeCount
     private let pasteboard = NSPasteboard.general
     private var currentClipIndex: Int = 0
-    private var monitoringEnabled = true
+
+    private let timer: DispatchSourceTimer
+    private let timerInterval: DispatchTimeInterval = .milliseconds(1000)
     
     init() {
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-            if self.monitoringEnabled {
-                self.checkClipboard()
-            }
-        }
+        self.timer = DispatchSource.makeTimerSource()
+        timer.schedule(deadline: .now() + timerInterval, repeating: timerInterval)
+        timer.setEventHandler { [weak self] in self?.checkClipboard() }
+        timer.activate()
     }
     
     private func checkClipboard() {
@@ -77,13 +78,13 @@ class ClipboardManager: ObservableObject {
         }
     }
     
-    
+    //MARK: Monitoring state
     func disableMonitoring() {
-        monitoringEnabled = false
+        timer.suspend()
     }
     
     func enableMonitoring() {
-        monitoringEnabled = true
+        timer.resume()
         lastChangeCount = pasteboard.changeCount
     }
     
