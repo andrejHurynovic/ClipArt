@@ -5,7 +5,7 @@ import SwiftUI
 struct ClipListView: View {
     @ObservedObject var clipboardManager: ClipboardManager
     @State private var selectedClipID: UUID? = nil
-
+    
     var body: some View {
         VStack {
             List(clipboardManager.clips, id: \.id, selection: $selectedClipID) { clip in
@@ -39,7 +39,7 @@ struct ClipListView: View {
             .background(Color.gray.opacity(0.1))
         }
     }
-
+    
     private func registerCopyShortcut() {
         NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
             if event.modifierFlags.contains(.command) && event.keyCode == 8 { // Command + C
@@ -51,11 +51,11 @@ struct ClipListView: View {
             return event
         }
     }
-
+    
     private func copyToClipboard(_ clip: Clip) {
         let pasteboard = NSPasteboard.general
         pasteboard.clearContents()
-if clip.type == "text", let text = clip.content as? String {
+        if clip.type == "text", let text = clip.content as? String {
             pasteboard.setString(text, forType: .string)
         } else if clip.type.contains("image"), let image = clip.content as? NSImage {
             if let tiffData = image.tiffRepresentation {

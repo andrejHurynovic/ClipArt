@@ -11,31 +11,14 @@
 		21527E212C656978006B5982 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21527E202C656978006B5982 /* ContentView.swift */; };
 		21527E232C656979006B5982 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21527E222C656979006B5982 /* Assets.xcassets */; };
 		21527E262C656979006B5982 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21527E252C656979006B5982 /* Preview Assets.xcassets */; };
-		21527E312C656979006B5982 /* ClipArtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21527E302C656979006B5982 /* ClipArtTests.swift */; };
-		21527E3B2C656979006B5982 /* ClipArtUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21527E3A2C656979006B5982 /* ClipArtUITests.swift */; };
-		21527E3D2C656979006B5982 /* ClipArtUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21527E3C2C656979006B5982 /* ClipArtUITestsLaunchTests.swift */; };
 		21E0834D2C65E5DD0092F9D5 /* ClipboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E0834C2C65E5DD0092F9D5 /* ClipboardManager.swift */; };
 		21E88DDE2C6779A000017530 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E88DDD2C6779A000017530 /* SettingsView.swift */; };
 		21E88DE02C6779C400017530 /* ClipListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E88DDF2C6779C400017530 /* ClipListView.swift */; };
 		21E88DE22C677B4200017530 /* PreviewWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E88DE12C677B4200017530 /* PreviewWindowController.swift */; };
+		3B92AAA52CCE6CC3007C8CD4 /* Clip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B92AAA42CCE6CC0007C8CD4 /* Clip.swift */; };
+		3B92AAA72CCE6CE8007C8CD4 /* Clip+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B92AAA62CCE6CE2007C8CD4 /* Clip+Equatable.swift */; };
+		3B92AAA92CCE6D0D007C8CD4 /* Clip+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B92AAA82CCE6D08007C8CD4 /* Clip+Hashable.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		21527E2D2C656979006B5982 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 21527E132C656978006B5982 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 21527E1A2C656978006B5982;
-			remoteInfo = ClipArt;
-		};
-		21527E372C656979006B5982 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 21527E132C656978006B5982 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 21527E1A2C656978006B5982;
-			remoteInfo = ClipArt;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		21527E1B2C656978006B5982 /* ClipArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClipArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,33 +27,17 @@
 		21527E222C656979006B5982 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		21527E252C656979006B5982 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		21527E272C656979006B5982 /* ClipArt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClipArt.entitlements; sourceTree = "<group>"; };
-		21527E2C2C656979006B5982 /* ClipArtTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClipArtTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		21527E302C656979006B5982 /* ClipArtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipArtTests.swift; sourceTree = "<group>"; };
-		21527E362C656979006B5982 /* ClipArtUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClipArtUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		21527E3A2C656979006B5982 /* ClipArtUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipArtUITests.swift; sourceTree = "<group>"; };
-		21527E3C2C656979006B5982 /* ClipArtUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipArtUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		21E0834C2C65E5DD0092F9D5 /* ClipboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardManager.swift; sourceTree = "<group>"; };
 		21E88DDD2C6779A000017530 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		21E88DDF2C6779C400017530 /* ClipListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipListView.swift; sourceTree = "<group>"; };
 		21E88DE12C677B4200017530 /* PreviewWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewWindowController.swift; sourceTree = "<group>"; };
+		3B92AAA42CCE6CC0007C8CD4 /* Clip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clip.swift; sourceTree = "<group>"; };
+		3B92AAA62CCE6CE2007C8CD4 /* Clip+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Clip+Equatable.swift"; sourceTree = "<group>"; };
+		3B92AAA82CCE6D08007C8CD4 /* Clip+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Clip+Hashable.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		21527E182C656978006B5982 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		21527E292C656979006B5982 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		21527E332C656979006B5982 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -84,8 +51,6 @@
 			isa = PBXGroup;
 			children = (
 				21527E1D2C656978006B5982 /* ClipArt */,
-				21527E2F2C656979006B5982 /* ClipArtTests */,
-				21527E392C656979006B5982 /* ClipArtUITests */,
 				21527E1C2C656978006B5982 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -94,8 +59,6 @@
 			isa = PBXGroup;
 			children = (
 				21527E1B2C656978006B5982 /* ClipArt.app */,
-				21527E2C2C656979006B5982 /* ClipArtTests.xctest */,
-				21527E362C656979006B5982 /* ClipArtUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -103,15 +66,14 @@
 		21527E1D2C656978006B5982 /* ClipArt */ = {
 			isa = PBXGroup;
 			children = (
-				21E0834C2C65E5DD0092F9D5 /* ClipboardManager.swift */,
 				21527E1E2C656978006B5982 /* ClipArtApp.swift */,
-				21527E202C656978006B5982 /* ContentView.swift */,
+				21E0834C2C65E5DD0092F9D5 /* ClipboardManager.swift */,
+				3B92AAAA2CCE6D1A007C8CD4 /* Clip */,
+				3BD3EDC62CCE7171003729B0 /* Views */,
+				3BD3EDC72CCE718A003729B0 /* ViewControllers */,
+				21527E242C656979006B5982 /* Preview Content */,
 				21527E222C656979006B5982 /* Assets.xcassets */,
 				21527E272C656979006B5982 /* ClipArt.entitlements */,
-				21527E242C656979006B5982 /* Preview Content */,
-				21E88DDD2C6779A000017530 /* SettingsView.swift */,
-				21E88DDF2C6779C400017530 /* ClipListView.swift */,
-				21E88DE12C677B4200017530 /* PreviewWindowController.swift */,
 			);
 			path = ClipArt;
 			sourceTree = "<group>";
@@ -124,21 +86,32 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		21527E2F2C656979006B5982 /* ClipArtTests */ = {
+		3B92AAAA2CCE6D1A007C8CD4 /* Clip */ = {
 			isa = PBXGroup;
 			children = (
-				21527E302C656979006B5982 /* ClipArtTests.swift */,
+				3B92AAA42CCE6CC0007C8CD4 /* Clip.swift */,
+				3B92AAA62CCE6CE2007C8CD4 /* Clip+Equatable.swift */,
+				3B92AAA82CCE6D08007C8CD4 /* Clip+Hashable.swift */,
 			);
-			path = ClipArtTests;
+			path = Clip;
 			sourceTree = "<group>";
 		};
-		21527E392C656979006B5982 /* ClipArtUITests */ = {
+		3BD3EDC62CCE7171003729B0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				21527E3A2C656979006B5982 /* ClipArtUITests.swift */,
-				21527E3C2C656979006B5982 /* ClipArtUITestsLaunchTests.swift */,
+				21527E202C656978006B5982 /* ContentView.swift */,
+				21E88DDF2C6779C400017530 /* ClipListView.swift */,
+				21E88DDD2C6779A000017530 /* SettingsView.swift */,
 			);
-			path = ClipArtUITests;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3BD3EDC72CCE718A003729B0 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				21E88DE12C677B4200017530 /* PreviewWindowController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,42 +134,6 @@
 			productReference = 21527E1B2C656978006B5982 /* ClipArt.app */;
 			productType = "com.apple.product-type.application";
 		};
-		21527E2B2C656979006B5982 /* ClipArtTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 21527E432C656979006B5982 /* Build configuration list for PBXNativeTarget "ClipArtTests" */;
-			buildPhases = (
-				21527E282C656979006B5982 /* Sources */,
-				21527E292C656979006B5982 /* Frameworks */,
-				21527E2A2C656979006B5982 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				21527E2E2C656979006B5982 /* PBXTargetDependency */,
-			);
-			name = ClipArtTests;
-			productName = ClipArtTests;
-			productReference = 21527E2C2C656979006B5982 /* ClipArtTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		21527E352C656979006B5982 /* ClipArtUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 21527E462C656979006B5982 /* Build configuration list for PBXNativeTarget "ClipArtUITests" */;
-			buildPhases = (
-				21527E322C656979006B5982 /* Sources */,
-				21527E332C656979006B5982 /* Frameworks */,
-				21527E342C656979006B5982 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				21527E382C656979006B5982 /* PBXTargetDependency */,
-			);
-			name = ClipArtUITests;
-			productName = ClipArtUITests;
-			productReference = 21527E362C656979006B5982 /* ClipArtUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -205,18 +142,10 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					21527E1A2C656978006B5982 = {
 						CreatedOnToolsVersion = 15.4;
-					};
-					21527E2B2C656979006B5982 = {
-						CreatedOnToolsVersion = 15.4;
-						TestTargetID = 21527E1A2C656978006B5982;
-					};
-					21527E352C656979006B5982 = {
-						CreatedOnToolsVersion = 15.4;
-						TestTargetID = 21527E1A2C656978006B5982;
 					};
 				};
 			};
@@ -234,8 +163,6 @@
 			projectRoot = "";
 			targets = (
 				21527E1A2C656978006B5982 /* ClipArt */,
-				21527E2B2C656979006B5982 /* ClipArtTests */,
-				21527E352C656979006B5982 /* ClipArtUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -250,20 +177,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		21527E2A2C656979006B5982 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		21527E342C656979006B5982 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -272,45 +185,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				21527E212C656978006B5982 /* ContentView.swift in Sources */,
+				3B92AAA52CCE6CC3007C8CD4 /* Clip.swift in Sources */,
 				21E88DDE2C6779A000017530 /* SettingsView.swift in Sources */,
 				21E88DE22C677B4200017530 /* PreviewWindowController.swift in Sources */,
+				3B92AAA92CCE6D0D007C8CD4 /* Clip+Hashable.swift in Sources */,
+				3B92AAA72CCE6CE8007C8CD4 /* Clip+Equatable.swift in Sources */,
 				21E0834D2C65E5DD0092F9D5 /* ClipboardManager.swift in Sources */,
 				21527E1F2C656978006B5982 /* ClipArtApp.swift in Sources */,
 				21E88DE02C6779C400017530 /* ClipListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		21527E282C656979006B5982 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				21527E312C656979006B5982 /* ClipArtTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		21527E322C656979006B5982 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				21527E3D2C656979006B5982 /* ClipArtUITestsLaunchTests.swift in Sources */,
-				21527E3B2C656979006B5982 /* ClipArtUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		21527E2E2C656979006B5982 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 21527E1A2C656978006B5982 /* ClipArt */;
-			targetProxy = 21527E2D2C656979006B5982 /* PBXContainerItemProxy */;
-		};
-		21527E382C656979006B5982 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 21527E1A2C656978006B5982 /* ClipArt */;
-			targetProxy = 21527E372C656979006B5982 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		21527E3E2C656979006B5982 /* Debug */ = {
@@ -347,6 +233,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -373,6 +260,7 @@
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -410,6 +298,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -428,6 +317,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
@@ -437,11 +327,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ClipArt/ClipArt.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ClipArt/Preview Content\"";
-				DEVELOPMENT_TEAM = 2KZFJAHQ2W;
+				DEVELOPMENT_TEAM = R38NN26M52;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -465,11 +357,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ClipArt/ClipArt.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ClipArt/Preview Content\"";
-				DEVELOPMENT_TEAM = 2KZFJAHQ2W;
+				DEVELOPMENT_TEAM = R38NN26M52;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -484,78 +378,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		21527E442C656979006B5982 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2KZFJAHQ2W;
-				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.5;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = tuzin.art.ClipArtTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ClipArt.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ClipArt";
-			};
-			name = Debug;
-		};
-		21527E452C656979006B5982 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2KZFJAHQ2W;
-				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.5;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = tuzin.art.ClipArtTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ClipArt.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ClipArt";
-			};
-			name = Release;
-		};
-		21527E472C656979006B5982 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2KZFJAHQ2W;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = tuzin.art.ClipArtUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = ClipArt;
-			};
-			name = Debug;
-		};
-		21527E482C656979006B5982 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2KZFJAHQ2W;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = tuzin.art.ClipArtUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = ClipArt;
 			};
 			name = Release;
 		};
@@ -576,24 +398,6 @@
 			buildConfigurations = (
 				21527E412C656979006B5982 /* Debug */,
 				21527E422C656979006B5982 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		21527E432C656979006B5982 /* Build configuration list for PBXNativeTarget "ClipArtTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				21527E442C656979006B5982 /* Debug */,
-				21527E452C656979006B5982 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		21527E462C656979006B5982 /* Build configuration list for PBXNativeTarget "ClipArtUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				21527E472C656979006B5982 /* Debug */,
-				21527E482C656979006B5982 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
