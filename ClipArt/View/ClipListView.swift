@@ -9,13 +9,11 @@ struct ClipListView: View {
     var body: some View {
         VStack {
             List(clipboardManager.clips, selection: $selectedClipID) { clip in
-                VStack(alignment: .leading) {
-                    ClipView(clip: clip)
-                }
-                .contentShape(Rectangle()) // Make the whole item clickable
-                .onTapGesture {
-                    selectedClipID = clip.id
-                }
+                ClipView(clip: clip)
+                    .contentShape(Rectangle()) // Make the whole item clickable
+                    .onTapGesture {
+                        selectedClipID = clip.id
+                    }
             }
             .onAppear {
                 registerCopyShortcut()

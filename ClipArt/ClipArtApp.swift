@@ -1,3 +1,4 @@
+//
 //  ClipArtApp.swift
 //  ClipArt
 //
@@ -8,13 +9,25 @@ import SwiftUI
 
 @main
 struct ClipArtApp: App {
+    let clipboardManager = ClipboardManager()
+    let clipsViewModel = ClipsViewModel()
+    @Environment(\.openWindow) var openWindow
+    
+    init() {
+        clipsViewModel.openWindowAction = openWindow
+    }
+    
     var body: some Scene {
-        let clipboardManager = ClipboardManager()
-        
         MenuBarExtra("ClipArt", systemImage: "clipboard") {
             MenuBarContent()
                 .environmentObject(clipboardManager)
         }
         .menuBarExtraStyle(.window)
+        
+        WindowGroup(id: "\(Bundle.main.bundleURL).preview") {
+            ClipListView()
+                .environmentObject(clipboardManager)
+        }
     }
 }
+

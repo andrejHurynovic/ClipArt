@@ -1,4 +1,10 @@
-//SettingsView.swift
+//
+//  SettingsView.swift
+//  ClipArt
+//
+//  Created by Andrej Hurynovič on 27.10.2024.
+//
+
 
 import SwiftUI
 
@@ -10,19 +16,13 @@ struct SettingsView: View {
     var body: some View {
         Form {
             Section(header: Text("Shortcuts")) {
-                LabeledContent("Open Clip List:") {
-                    TextField("Shortcut", text: $openListShortcut)
-                }
-                LabeledContent("Previous Clip:") {
-                    TextField("Shortcut", text: $previousClipShortcut)
-                }
-                LabeledContent("Next Clip:") {
-                    TextField("Shortcut", text: $nextClipShortcut)
-                }
+                TextField("Open Clip List", text: $openListShortcut)
+                TextField("Previous Clip", text: $previousClipShortcut)
+                TextField("Next Clip", text: $nextClipShortcut)
             }
         }
         .padding()
-        .frame(width: 400, height: 200)
+        .frame(width: 300, height: 200)
     }
 }
 
