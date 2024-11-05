@@ -6,45 +6,34 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct ClipArtApp: App {
-    let clipboardManager = ClipboardManager()
+    let clipboardManager: ClipboardManager
     let clipsViewModel = ClipsViewModel()
+    let modelContainer = try! ModelContainer(for: Clip.self)
+    let context: ModelContext
+    
     @Environment(\.openWindow) var openWindow
     
-    init() { setupHotkeys() }
+    init() {
+        context = modelContainer.mainContext
+        clipboardManager = ClipboardManager(modelContext: self.context)
+        setupHotkeys() }
     
     var body: some Scene {
         MenuBarExtra("ClipArt", systemImage: "clipboard") {
             MenuBarContent()
-                .environmentObject(clipboardManager)
+                .modelContext(context)
+                .environment(clipboardManager)
         }
         .menuBarExtraStyle(.window)
         
         WindowGroup(id: "\(Bundle.main.bundleURL).preview") {
-            ClipListView()
-                .environmentObject(clipboardManager)
+            ClipsView()
+                .modelContext(context)
+                .environment(clipboardManager)
         }
-    }
-}
-
-import HotKey
-
-extension ClipArtApp {
-    func setupHotkeys() {
-        let openListShortcut = KeyCombo(key: .o, modifiers: [.control, .shift])
-        let previousClipShortcut = KeyCombo(key: .w, modifiers: [.control, .shift])
-        let nextClipShortcut = KeyCombo(key: .s, modifiers: [.control, .shift])
-        clipsViewModel.hotkeys.append(contentsOf: [HotKey(keyCombo: openListShortcut, keyDownHandler: { openClipsView() }),
-                                                   HotKey(keyCombo: previousClipShortcut, keyDownHandler: {}),
-                                                   HotKey(keyCombo: nextClipShortcut, keyDownHandler: {})])
-        
-        
-    }
-    
-    func openClipsView() {
-        NSApplication.shared.activate(ignoringOtherApps: true)
-        openWindow(id: "\(Bundle.main.bundleURL).preview")
     }
 }

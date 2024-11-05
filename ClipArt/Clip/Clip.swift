@@ -6,10 +6,25 @@
 //
 
 import AppKit
+import SwiftData
 
-struct Clip: Identifiable {
-    let id = UUID()
-    let type: NSPasteboard.PasteboardType
-    let content: Data
-    let description: String?
+@Model
+final class Clip {
+    var creationDate = Date()
+    private var typeRawValue: String
+    var content: Data
+    var uiDescription: String?
+    
+    init?(from item: NSPasteboardItem) {
+        guard let itemType = item.types.first,
+              let itemData = item.data(forType: itemType) else { return nil }
+        
+        self.typeRawValue = itemType.rawValue
+        self.content = itemData
+        self.uiDescription = item.string(forType: .string)
+    }
+}
+
+extension Clip {
+    var type: NSPasteboard.PasteboardType { NSPasteboard.PasteboardType(typeRawValue) }
 }

@@ -6,24 +6,28 @@
 //
 
 import AppKit
+import SwiftData
 
-class ClipboardManager: ObservableObject {
-    var clips: [Clip] = []
-    
+@Observable
+final class ClipboardManager {
     private var lastChangeCount = NSPasteboard.general.changeCount
     private let pasteboard = NSPasteboard.general
     private var currentClipIndex: Int = 0
-
+    
     private let timer: DispatchSourceTimer
     private let timerInterval: DispatchTimeInterval = .milliseconds(1000)
     
-    init() {
+    private var modelContext: ModelContext
+    
+    init(modelContext: ModelContext) {
+        self.modelContext = modelContext
         self.timer = DispatchSource.makeTimerSource()
         timer.schedule(deadline: .now() + timerInterval, repeating: timerInterval)
         timer.setEventHandler { [weak self] in self?.checkClipboard() }
         timer.activate()
     }
     
+    //MARK: Clipboard actions
     private func checkClipboard() {
         guard pasteboard.changeCount != lastChangeCount else { return }
         lastChangeCount = pasteboard.changeCount
@@ -31,45 +35,12 @@ class ClipboardManager: ObservableObject {
         self.currentClipIndex = 0
         
         Task { @MainActor in
-            self.clips.append(contentsOf: items.compactMap({ Clip(from: $0) }))
-        }
-    }
-    
-    //MARK: Monitoring state
-    private func disableMonitoring() {
-        timer.suspend()
-    }
-    
-    private func enableMonitoring() {
-        timer.resume()
-        lastChangeCount = pasteboard.changeCount
-    }
-    
-    func getCurrentClip() -> Clip? {
-        guard !clips.isEmpty, currentClipIndex >= 0, currentClipIndex < clips.count else { return nil }
-        return clips[currentClipIndex]
-    }
-    
-    func showNextClip() {
-        if currentClipIndex < clips.count - 1 {
-            currentClipIndex += 1
-        }
-    }
-    
-    func showPreviousClip() {
-        if currentClipIndex > 0 {
-            currentClipIndex -= 1
-        }
-    }
-    
-    func resetToLatestClip() {
-        currentClipIndex = 0
-    }
-    
-    func removeCurrentClip() {
-        if !clips.isEmpty, currentClipIndex >= 0, currentClipIndex < clips.count {
-            clips.remove(at: currentClipIndex)
-            currentClipIndex = max(0, currentClipIndex - 1)
+            let clips = items.compactMap { Clip(from: $0) }
+            try! modelContext.transaction {
+                clips.forEach { clip in
+                    modelContext.insert(clip)
+                }
+            }
         }
     }
     
@@ -87,8 +58,7 @@ class ClipboardManager: ObservableObject {
             pasteClip()
         }
     }
-    
-    func pasteClip() {
+    private func pasteClip() {
         let keyVDown = CGEvent(keyboardEventSource: nil, virtualKey: 9, keyDown: true) // 'v' key
         let keyVUp = CGEvent(keyboardEventSource: nil, virtualKey: 9, keyDown: false)
         
@@ -98,4 +68,15 @@ class ClipboardManager: ObservableObject {
         keyVDown?.post(tap: .cghidEventTap)
         keyVUp?.post(tap: .cghidEventTap)
     }
+    
+    //MARK: Monitoring state
+    private func disableMonitoring() {
+        timer.suspend()
+    }
+    
+    private func enableMonitoring() {
+        timer.resume()
+        lastChangeCount = pasteboard.changeCount
+    }
+
 }

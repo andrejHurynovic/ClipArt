@@ -9,12 +9,10 @@
 import SwiftUI
 
 struct MenuBarContent: View {
-    @EnvironmentObject var clipboardManager: ClipboardManager
     @State private var currentClip: Clip?
     
     var body: some View {
-        ClipListView()
-            .environmentObject(clipboardManager)
+        ClipsView()
     }
 }
 

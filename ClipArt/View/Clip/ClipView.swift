@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct ClipView: View {
-    var clip: Clip
+    let clip: Clip
+    
+    @Environment(\.modelContext) var modelContext
     
     var body: some View {
         VStack {
@@ -17,8 +19,14 @@ struct ClipView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             }
-            if let description = clip.description {
+            if let description = clip.uiDescription {
                 Text(description)
+            }
+        }
+        .help(clip.creationDate.formatted(date: .complete, time: .complete))
+        .contextMenu {
+            Button("Delete", systemImage: "trash.bin", role: .destructive) {
+                try? modelContext.transaction {  modelContext.delete(clip) }
             }
         }
     }
