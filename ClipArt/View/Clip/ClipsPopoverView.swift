@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ClipsPopoverView: View {
     @Environment(AppStateManager.self) private var appStateManager
-
+    
     @Environment(\.controlActiveState) var controlActiveState
     @Environment(\.dismiss) private var dismiss
     
@@ -30,6 +30,7 @@ struct ClipsPopoverView: View {
                     dismiss()
                 }
             })
+            .environment(appStateManager.clipboardManager)
     }
 }
 

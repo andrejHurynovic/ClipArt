@@ -13,9 +13,9 @@ extension ClipArtApp {
         let openListShortcut = KeyCombo(key: .o, modifiers: [.control, .shift])
         let previousClipShortcut = KeyCombo(key: .w, modifiers: [.control, .shift])
         let nextClipShortcut = KeyCombo(key: .s, modifiers: [.control, .shift])
-        clipsViewModel.hotkeys.append(contentsOf: [HotKey(keyCombo: openListShortcut, keyDownHandler: { openClipsView() }),
-                                                   HotKey(keyCombo: previousClipShortcut, keyDownHandler: {}),
-                                                   HotKey(keyCombo: nextClipShortcut, keyDownHandler: {})])
+        appStateManager.hotkeys.append(contentsOf: [HotKey(keyCombo: openListShortcut, keyDownHandler: { openClipsView() }),
+                                                    HotKey(keyCombo: previousClipShortcut, keyDownHandler: {}),
+                                                    HotKey(keyCombo: nextClipShortcut, keyDownHandler: {})])
         
         
     }

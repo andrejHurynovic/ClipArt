@@ -17,7 +17,6 @@
 		3BE9E29B2CE35ADF00696A14 /* ClipsPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE9E29A2CE35ADF00696A14 /* ClipsPopoverView.swift */; };
 		3BE9E29D2CE35B2600696A14 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE9E29C2CE35B2100696A14 /* Constants.swift */; };
 		3BEB4B6F2CDAD21E0048BB96 /* AppStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEB4B6E2CDAD21E0048BB96 /* AppStateManager.swift */; };
-		3BED19D02CCEAED100237C35 /* ClipsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BED19CF2CCEAED100237C35 /* ClipsViewModel.swift */; };
 		3BED19D42CCEAF2600237C35 /* MenuBarContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BED19D32CCEAF2600237C35 /* MenuBarContent.swift */; };
 		3BED19D72CCEB24400237C35 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 3BED19D62CCEB24400237C35 /* HotKey */; };
 		3BED19D92CCEC48D00237C35 /* ClipArtApp+setupHotkeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BED19D82CCEC48C00237C35 /* ClipArtApp+setupHotkeys.swift */; };
@@ -40,7 +39,6 @@
 		3BE9E29A2CE35ADF00696A14 /* ClipsPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipsPopoverView.swift; sourceTree = "<group>"; };
 		3BE9E29C2CE35B2100696A14 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3BEB4B6E2CDAD21E0048BB96 /* AppStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateManager.swift; sourceTree = "<group>"; };
-		3BED19CF2CCEAED100237C35 /* ClipsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipsViewModel.swift; sourceTree = "<group>"; };
 		3BED19D32CCEAF2600237C35 /* MenuBarContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarContent.swift; sourceTree = "<group>"; };
 		3BED19D82CCEC48C00237C35 /* ClipArtApp+setupHotkeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClipArtApp+setupHotkeys.swift"; sourceTree = "<group>"; };
 		3BED19DA2CCEC97900237C35 /* ClipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipsView.swift; sourceTree = "<group>"; };
@@ -127,7 +125,6 @@
 		3BED19CE2CCEAECA00237C35 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				3BED19CF2CCEAED100237C35 /* ClipsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -227,7 +224,6 @@
 				3BEB4B6F2CDAD21E0048BB96 /* AppStateManager.swift in Sources */,
 				3B92AAA52CCE6CC3007C8CD4 /* Clip.swift in Sources */,
 				3BEFF8032CCE9E630073121F /* ClipboardManager.swift in Sources */,
-				3BED19D02CCEAED100237C35 /* ClipsViewModel.swift in Sources */,
 				3BED19DB2CCEC97900237C35 /* ClipsView.swift in Sources */,
 				3BE9E29D2CE35B2600696A14 /* Constants.swift in Sources */,
 				3B92AAA92CCE6D0D007C8CD4 /* Clip+Hashable.swift in Sources */,

@@ -6,9 +6,19 @@
 //
 
 import SwiftUI
+import SwiftData
+import HotKey
 
 @Observable
 final class AppStateManager {
+    let clipboardManager: ClipboardManager
+    
+    var hotkeys: [HotKey] = []
+    
     var isPopoverPresented = false
     var needToOpenWindow = false
+    
+    init(modelContext: ModelContext) {
+        self.clipboardManager = ClipboardManager(modelContext: modelContext)
+    }
 }

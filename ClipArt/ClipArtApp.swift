@@ -10,9 +10,7 @@ import SwiftData
 
 @main
 struct ClipArtApp: App {
-    @State var appStateManager = AppStateManager()
-    let clipboardManager: ClipboardManager
-    let clipsViewModel = ClipsViewModel()
+    @State var appStateManager: AppStateManager
     let modelContainer = try! ModelContainer(for: Clip.self)
     let context: ModelContext
     
@@ -20,14 +18,15 @@ struct ClipArtApp: App {
     
     init() {
         context = modelContainer.mainContext
-        clipboardManager = ClipboardManager(modelContext: self.context)
-        setupHotkeys() }
+        appStateManager = AppStateManager(modelContext: modelContainer.mainContext)
+        setupHotkeys()
+    }
     
     var body: some Scene {
         MenuBarExtra {
             MenuBarContent()
                 .modelContext(context)
-                .environment(clipboardManager)
+                .environment(appStateManager.clipboardManager)
         } label: {
             Image(systemName: "clipboard")
                 .onChange(of: appStateManager.needToOpenWindow) {
@@ -42,7 +41,6 @@ struct ClipArtApp: App {
         WindowGroup(id: Constants.popoverWindowGroupID) {
             ClipsPopoverView()
                 .modelContext(context)
-                .environment(clipboardManager)
                 .environment(appStateManager)
         }
         .windowLevel(.floating)
