@@ -59,7 +59,7 @@ final class ClipboardManager {
         }
     }
     private func pasteClip() {
-        let keyVDown = CGEvent(keyboardEventSource: nil, virtualKey: 9, keyDown: true) // 'v' key
+        let keyVDown = CGEvent(keyboardEventSource: nil, virtualKey: 9, keyDown: true)
         let keyVUp = CGEvent(keyboardEventSource: nil, virtualKey: 9, keyDown: false)
         
         keyVDown?.flags = .maskCommand

@@ -21,8 +21,7 @@ extension ClipArtApp {
     }
     
     private func openClipsView() {
-        NSApplication.shared.activate(ignoringOtherApps: true)
-        openWindow(id: "\(Bundle.main.bundleURL).preview")
+        appStateManager.needToOpenWindow = true
     }
 }
 
