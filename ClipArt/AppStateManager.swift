@@ -11,14 +11,21 @@ import HotKey
 
 @Observable
 final class AppStateManager {
-    let clipboardManager: ClipboardManager
+    @ObservationIgnored let clipboardManager: ClipboardManager
+    @ObservationIgnored let clipsViewMode = ClipsViewModel()
     
-    var hotkeys: [HotKey] = []
+    @ObservationIgnored let modelContext: ModelContext
+    @ObservationIgnored var hotkeys: [HotKey] = []
     
-    var isPopoverPresented = false
     var needToOpenWindow = false
     
     init(modelContext: ModelContext) {
+        self.modelContext = modelContext
         self.clipboardManager = ClipboardManager(modelContext: modelContext)
     }
+}
+
+@Observable
+final class ClipsViewModel {
+    var selectedClip: State<Clip?> = .init(initialValue: nil)
 }

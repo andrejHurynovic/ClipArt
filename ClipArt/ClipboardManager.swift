@@ -8,7 +8,6 @@
 import AppKit
 import SwiftData
 
-@Observable
 final class ClipboardManager {
     private var lastChangeCount = NSPasteboard.general.changeCount
     private let pasteboard = NSPasteboard.general

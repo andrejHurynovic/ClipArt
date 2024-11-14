@@ -10,39 +10,37 @@ import SwiftData
 
 @main
 struct ClipArtApp: App {
-    @State var appStateManager: AppStateManager
     let modelContainer = try! ModelContainer(for: Clip.self)
     let context: ModelContext
+    
+    @State var appStateManager: AppStateManager
+    
+    @State var panel: FloatingPanel<ClipsView>
     
     @Environment(\.openWindow) var openWindow
     
     init() {
         context = modelContainer.mainContext
-        appStateManager = AppStateManager(modelContext: modelContainer.mainContext)
+        let appStateManager = AppStateManager(modelContext: modelContainer.mainContext)
+        self.appStateManager = appStateManager
+        panel = FloatingPanel(contentRect: NSRect(x: 0, y: 0, width: 300, height: 400),
+                              appStateManager: appStateManager) {
+            ClipsView(clipboardManager: appStateManager.clipboardManager)
+        }
         setupHotkeys()
     }
     
     var body: some Scene {
         MenuBarExtra {
-            MenuBarContent()
+            ClipsView(clipboardManager: appStateManager.clipboardManager)
                 .modelContext(context)
-                .environment(appStateManager.clipboardManager)
         } label: {
             Image(systemName: "clipboard")
                 .onChange(of: appStateManager.needToOpenWindow) {
-                    if appStateManager.needToOpenWindow, !appStateManager.isPopoverPresented {
-                        openWindow(id: Constants.popoverWindowGroupID)
-                    }
+                    panel.open()
                     appStateManager.needToOpenWindow = false
                 }
         }
         .menuBarExtraStyle(.window)
-        
-        WindowGroup(id: Constants.popoverWindowGroupID) {
-            ClipsPopoverView()
-                .modelContext(context)
-                .environment(appStateManager)
-        }
-        .windowLevel(.floating)
     }
 }
