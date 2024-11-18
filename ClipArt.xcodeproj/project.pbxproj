@@ -19,7 +19,6 @@
 		3BE9E29D2CE35B2600696A14 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE9E29C2CE35B2100696A14 /* Constants.swift */; };
 		3BEB4B6F2CDAD21E0048BB96 /* AppStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEB4B6E2CDAD21E0048BB96 /* AppStateManager.swift */; };
 		3BED19D72CCEB24400237C35 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 3BED19D62CCEB24400237C35 /* HotKey */; };
-		3BED19D92CCEC48D00237C35 /* ClipArtApp+setupHotkeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BED19D82CCEC48C00237C35 /* ClipArtApp+setupHotkeys.swift */; };
 		3BED19DB2CCEC97900237C35 /* ClipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BED19DA2CCEC97900237C35 /* ClipsView.swift */; };
 		3BED19DD2CCECC5400237C35 /* ClipsQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BED19DC2CCECC5400237C35 /* ClipsQueryView.swift */; };
 		3BEFF8032CCE9E630073121F /* ClipboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEFF8022CCE9E630073121F /* ClipboardManager.swift */; };
@@ -40,7 +39,6 @@
 		3BD3EDCD2CCE9949003729B0 /* ClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipView.swift; sourceTree = "<group>"; };
 		3BE9E29C2CE35B2100696A14 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3BEB4B6E2CDAD21E0048BB96 /* AppStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateManager.swift; sourceTree = "<group>"; };
-		3BED19D82CCEC48C00237C35 /* ClipArtApp+setupHotkeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClipArtApp+setupHotkeys.swift"; sourceTree = "<group>"; };
 		3BED19DA2CCEC97900237C35 /* ClipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipsView.swift; sourceTree = "<group>"; };
 		3BED19DC2CCECC5400237C35 /* ClipsQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipsQueryView.swift; sourceTree = "<group>"; };
 		3BEFF8022CCE9E630073121F /* ClipboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardManager.swift; sourceTree = "<group>"; };
@@ -79,7 +77,6 @@
 			isa = PBXGroup;
 			children = (
 				21527E1E2C656978006B5982 /* ClipArtApp.swift */,
-				3BED19D82CCEC48C00237C35 /* ClipArtApp+setupHotkeys.swift */,
 				3BC9DAEF2CEAC546001A20CA /* Managers */,
 				3BE9E29C2CE35B2100696A14 /* Constants.swift */,
 				3B92AAAA2CCE6D1A007C8CD4 /* Models */,
@@ -239,7 +236,6 @@
 				21527E1F2C656978006B5982 /* ClipArtApp.swift in Sources */,
 				3BD3EDCE2CCE9949003729B0 /* ClipView.swift in Sources */,
 				3B8AC9812CE3E5CC0023CF71 /* Panel.swift in Sources */,
-				3BED19D92CCEC48D00237C35 /* ClipArtApp+setupHotkeys.swift in Sources */,
 				3BED19DD2CCECC5400237C35 /* ClipsQueryView.swift in Sources */,
 				3BEFF8092CCE9FB70073121F /* SettingsView.swift in Sources */,
 			);

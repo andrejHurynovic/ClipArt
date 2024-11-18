@@ -9,45 +9,46 @@ import SwiftUI
 
 struct ClipsView: View {
     public var clipboardManager: ClipboardManager
+    @Bindable public var viewModel: ClipsViewModel
     
-    @State private var searchText = ""
-    @State private var selectedClip: Clip?
     @Environment(\.dismiss) private var dismiss
     
     @State private var copyHotkeyMonitor: Any?
     @Environment(\.controlActiveState) var controlActiveState
     @FocusState var listFocus
-    
+
     var body: some View {
         if controlActiveState == .key {
-            ClipsQueryView(searchString: searchText) { clips in
-                
-                List(clips, id: \.self, selection: $selectedClip) { clip in
-                    Button {
-                        selectedClip = clip
-                    } label: {
-                        ClipView(clip: clip)
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                }
-                .focused($listFocus)
-                .animation(.snappy, value: clips)
-            }
-            
-            .searchable(text: $searchText, placement: .toolbar)
-            
-            .onSubmit { onSubmit(withPaste: true) }
-            
-            .onAppear {
-                addCopyHotkeyMonitor()
-                listFocus = true
-            }
-            .onDisappear { removeCopyHotkeyMonitor() }
+            clips
         }
     }
     
+    private var clips: some View {
+        ScrollViewReader { proxy in
+            ClipsQueryView(searchString: viewModel.searchText) { clips in
+                List(clips, id: \.self, selection: $viewModel.selectedClip) { clip in
+                    ClipView(clip: clip)
+                        .id(clip as Clip?)
+                }
+                .focused($listFocus)
+            }
+            .task {
+                guard let selectedClip = viewModel.selectedClip else { return }
+                proxy.scrollTo(selectedClip, anchor: .center)
+            }
+        }
+
+        .searchable(text: $viewModel.searchText, placement: .toolbar)
+        
+        .task {
+            addCopyHotkeyMonitor()
+            listFocus = true
+        }
+        .onDisappear { removeCopyHotkeyMonitor() }
+    }
+    
     private func onSubmit(withPaste: Bool) {
-        guard let selectedClip = selectedClip else { return }
+        guard let selectedClip = viewModel.selectedClip else { return }
         clipboardManager.insertClip(selectedClip, withPaste: withPaste)
         dismiss()
     }

@@ -18,12 +18,11 @@ struct ClipArtApp: App {
     init() {
         context = modelContainer.mainContext
         appStateManager = AppStateManager(modelContext: modelContainer.mainContext)
-        setupHotkeys()
     }
     
     var body: some Scene {
         MenuBarExtra {
-            ClipsView(clipboardManager: appStateManager.clipboardManager)
+            ClipsView(clipboardManager: appStateManager.clipboardManager, viewModel: appStateManager.clipsViewModel)
                 .modelContext(context)
         } label: {
             Image(systemName: "clipboard")

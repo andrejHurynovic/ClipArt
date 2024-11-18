@@ -32,8 +32,6 @@ final class Panel<Content: View>: NSPanel {
         
         collectionBehavior.insert(.fullScreenAuxiliary)
         
-        titlebarAppearsTransparent = true
-        
         animationBehavior = .utilityWindow
         backgroundColor = .clear
         contentView = NSHostingView(
@@ -55,6 +53,14 @@ final class Panel<Content: View>: NSPanel {
     override func resignKey() {
         super.resignKey()
         close()
+    }
+    
+    override var canBecomeKey: Bool {
+        return true
+    }
+    
+    override var canBecomeMain: Bool {
+        return true
     }
 }
 

@@ -9,17 +9,19 @@ import AppKit
 import SwiftData
 
 final class ClipboardManager {
-    private var lastChangeCount = NSPasteboard.general.changeCount
     private let pasteboard = NSPasteboard.general
+
+    private var lastChangeCount = NSPasteboard.general.changeCount
     private var currentClipIndex: Int = 0
     
     private let timer: DispatchSourceTimer
     private let timerInterval: DispatchTimeInterval = .milliseconds(1000)
     
-    private var modelContext: ModelContext
+    private let modelContext: ModelContext
     
     init(modelContext: ModelContext) {
         self.modelContext = modelContext
+        
         self.timer = DispatchSource.makeTimerSource()
         timer.schedule(deadline: .now() + timerInterval, repeating: timerInterval)
         timer.setEventHandler { [weak self] in self?.checkClipboard() }

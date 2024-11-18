@@ -7,8 +7,8 @@
 
 import SwiftUI
 
+@Observable
 final class ClipsViewModel: ObservableObject {
-    
-    
-    @Published var selectedClip: Clip? = nil
+    var selectedClip: Clip? = nil
+    var searchText: String = ""
 }
