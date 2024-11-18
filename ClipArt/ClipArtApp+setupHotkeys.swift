@@ -9,20 +9,7 @@ import AppKit
 import HotKey
 
 extension ClipArtApp {
-    func setupHotkeys() {
-        let openListShortcut = KeyCombo(key: .o, modifiers: [.control, .shift])
-        let previousClipShortcut = KeyCombo(key: .w, modifiers: [.control, .shift])
-        let nextClipShortcut = KeyCombo(key: .s, modifiers: [.control, .shift])
-        appStateManager.hotkeys.append(contentsOf: [HotKey(keyCombo: openListShortcut, keyDownHandler: { openClipsView() }),
-                                                    HotKey(keyCombo: previousClipShortcut, keyDownHandler: {}),
-                                                    HotKey(keyCombo: nextClipShortcut, keyDownHandler: {})])
-        
-        
-    }
-    
-    private func openClipsView() {
-        appStateManager.clipsPanel.open()
-    }
+
 }
 
 

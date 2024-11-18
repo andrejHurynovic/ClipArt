@@ -26,8 +26,18 @@ final class AppStateManager {
             ClipsView(clipboardManager: clipboardManager)
         })
     }
+    
+    private func setupHotkeys() {
+        let openListShortcut = KeyCombo(key: .o, modifiers: [.control, .shift])
+        let previousClipShortcut = KeyCombo(key: .w, modifiers: [.control, .shift])
+        let nextClipShortcut = KeyCombo(key: .s, modifiers: [.control, .shift])
+        hotkeys.append(contentsOf: [HotKey(keyCombo: openListShortcut, keyDownHandler: { [weak self] in self?.openClipsView() }),
+                                                    HotKey(keyCombo: previousClipShortcut, keyDownHandler: {}),
+                                                    HotKey(keyCombo: nextClipShortcut, keyDownHandler: {})])
+    }
+    
+    private func openClipsView() {
+        clipsPanel.open()
+    }
 }
 
-final class ClipsViewModel: ObservableObject {
-    @Published var selectedClip: Clip? = nil
-}
