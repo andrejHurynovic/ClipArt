@@ -9,23 +9,25 @@ import SwiftUI
 import SwiftData
 import HotKey
 
-@Observable
 final class AppStateManager {
-    @ObservationIgnored let clipboardManager: ClipboardManager
-    @ObservationIgnored let clipsViewMode = ClipsViewModel()
+    let clipboardManager: ClipboardManager
+    let clipsViewModel = ClipsViewModel()
     
-    @ObservationIgnored let modelContext: ModelContext
-    @ObservationIgnored var hotkeys: [HotKey] = []
+    let modelContext: ModelContext
+    var hotkeys: [HotKey] = []
     
-    var needToOpenWindow = false
+    var clipsPanel: Panel<ClipsView>!
     
     init(modelContext: ModelContext) {
         self.modelContext = modelContext
         self.clipboardManager = ClipboardManager(modelContext: modelContext)
+        self.clipsPanel = Panel(contentRect: NSRect.init(x: 0, y: 0, width: 1000, height: 500),
+                                appStateManager: self, content: {
+            ClipsView(clipboardManager: clipboardManager)
+        })
     }
 }
 
-@Observable
-final class ClipsViewModel {
-    var selectedClip: State<Clip?> = .init(initialValue: nil)
+final class ClipsViewModel: ObservableObject {
+    @Published var selectedClip: Clip? = nil
 }

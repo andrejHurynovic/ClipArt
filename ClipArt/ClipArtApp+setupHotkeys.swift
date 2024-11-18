@@ -21,7 +21,7 @@ extension ClipArtApp {
     }
     
     private func openClipsView() {
-        appStateManager.needToOpenWindow = true
+        appStateManager.clipsPanel.open()
     }
 }
 

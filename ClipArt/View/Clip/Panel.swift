@@ -1,9 +1,21 @@
+//
+//  AppStateManager.swift
+//  ClipArt
+//
+//  Created by Andrej Hurynovič on 06.11.2024.
+//
+
 import SwiftUI
 
-class FloatingPanel<Content: View>: NSPanel {
+final class Panel<Content: View>: NSPanel {
+    let contentRect: NSRect
+    let appStateManager: AppStateManager
+    
     init(contentRect: NSRect,
          appStateManager: AppStateManager,
          content: () -> Content) {
+        self.contentRect = contentRect
+        self.appStateManager = appStateManager
         
         super.init(
             contentRect: contentRect,
@@ -15,17 +27,29 @@ class FloatingPanel<Content: View>: NSPanel {
         standardWindowButton(.miniaturizeButton)?.isHidden = true
         standardWindowButton(.zoomButton)?.isHidden = true
         
+        isFloatingPanel = true
+        level = .floating
+        
+        collectionBehavior.insert(.fullScreenAuxiliary)
+        
+        titlebarAppearsTransparent = true
+        
+        animationBehavior = .utilityWindow
+        backgroundColor = .clear
         contentView = NSHostingView(
             rootView: content()
                 .modelContext(appStateManager.modelContext))
     }
+    
+    //MARK: Setup
+    
     func open() {
-        setContentSize(NSSize(width: 300, height: 400))
-        
-        center()
-        
         orderFrontRegardless()
         makeKey()
+        
+        setContentSize(contentRect.size)
+        
+        center()
     }
     
     override func resignKey() {
@@ -33,3 +57,4 @@ class FloatingPanel<Content: View>: NSPanel {
         close()
     }
 }
+

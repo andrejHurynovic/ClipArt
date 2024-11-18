@@ -15,18 +15,9 @@ struct ClipArtApp: App {
     
     @State var appStateManager: AppStateManager
     
-    @State var panel: FloatingPanel<ClipsView>
-    
-    @Environment(\.openWindow) var openWindow
-    
     init() {
         context = modelContainer.mainContext
-        let appStateManager = AppStateManager(modelContext: modelContainer.mainContext)
-        self.appStateManager = appStateManager
-        panel = FloatingPanel(contentRect: NSRect(x: 0, y: 0, width: 300, height: 400),
-                              appStateManager: appStateManager) {
-            ClipsView(clipboardManager: appStateManager.clipboardManager)
-        }
+        appStateManager = AppStateManager(modelContext: modelContainer.mainContext)
         setupHotkeys()
     }
     
@@ -36,10 +27,6 @@ struct ClipArtApp: App {
                 .modelContext(context)
         } label: {
             Image(systemName: "clipboard")
-                .onChange(of: appStateManager.needToOpenWindow) {
-                    panel.open()
-                    appStateManager.needToOpenWindow = false
-                }
         }
         .menuBarExtraStyle(.window)
     }
