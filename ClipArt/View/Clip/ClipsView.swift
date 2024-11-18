@@ -30,6 +30,7 @@ struct ClipsView: View {
                     ClipView(clip: clip)
                         .id(clip as Clip?)
                 }
+                .scrollContentBackground(.hidden)
                 .focused($listFocus)
             }
             .task {

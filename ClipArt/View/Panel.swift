@@ -32,11 +32,17 @@ final class Panel<Content: View>: NSPanel {
         
         collectionBehavior.insert(.fullScreenAuxiliary)
         
-        animationBehavior = .utilityWindow
+        animationBehavior = .none
         backgroundColor = .clear
-        contentView = NSHostingView(
-            rootView: content()
-                .modelContext(appStateManager.modelContext))
+       
+        let contentView = ZStack {
+            VisualEffectView(material: .popover)
+                .ignoresSafeArea()
+            content()
+                .modelContext(appStateManager.modelContext)
+        }
+        
+        self.contentView = NSHostingView(rootView: contentView)
     }
     
     //MARK: Setup
