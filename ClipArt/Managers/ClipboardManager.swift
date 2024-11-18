@@ -10,9 +10,9 @@ import SwiftData
 
 final class ClipboardManager {
     private let pasteboard = NSPasteboard.general
-
+    
+    private var lastPasteboardItemString: String?
     private var lastChangeCount = NSPasteboard.general.changeCount
-    private var currentClipIndex: Int = 0
     
     private let timer: DispatchSourceTimer
     private let timerInterval: DispatchTimeInterval = .milliseconds(1000)
@@ -22,7 +22,9 @@ final class ClipboardManager {
     init(modelContext: ModelContext) {
         self.modelContext = modelContext
         
-        self.timer = DispatchSource.makeTimerSource()
+        lastPasteboardItemString = pasteboard.pasteboardItems?.first?.string(forType: .string)
+        
+        timer = DispatchSource.makeTimerSource()
         timer.schedule(deadline: .now() + timerInterval, repeating: timerInterval)
         timer.setEventHandler { [weak self] in self?.checkClipboard() }
         timer.activate()
@@ -32,8 +34,10 @@ final class ClipboardManager {
     private func checkClipboard() {
         guard pasteboard.changeCount != lastChangeCount else { return }
         lastChangeCount = pasteboard.changeCount
-        guard let items = pasteboard.pasteboardItems else { return }
-        self.currentClipIndex = 0
+        
+        guard let items = pasteboard.pasteboardItems,
+              lastPasteboardItemString != items.first?.string(forType: .string) else { return }
+        lastPasteboardItemString = items.first?.string(forType: .string)
         
         Task { @MainActor in
             let clips = items.compactMap { Clip(from: $0) }
@@ -79,5 +83,5 @@ final class ClipboardManager {
         timer.resume()
         lastChangeCount = pasteboard.changeCount
     }
-
+    
 }
