@@ -81,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				21527E1E2C656978006B5982 /* ClipArtApp.swift */,
+				3BC169FC2CED1468000897C0 /* ClipsStorage.swift */,
 				3BC9DAEF2CEAC546001A20CA /* Managers */,
 				3BE9E29C2CE35B2100696A14 /* Constants.swift */,
 				3B92AAAA2CCE6D1A007C8CD4 /* Models */,
@@ -125,7 +126,6 @@
 			children = (
 				3BEB4B6E2CDAD21E0048BB96 /* AppStateManager.swift */,
 				3BEFF8022CCE9E630073121F /* ClipboardManager.swift */,
-				3BC169FC2CED1468000897C0 /* ClipsStorage.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";

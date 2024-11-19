@@ -10,20 +10,11 @@ import SwiftData
 
 @main
 struct ClipArtApp: App {
-    let modelContainer = try! ModelContainer(for: Clip.self)
-    let context: ModelContext
-    
-    @State var appStateManager: AppStateManager
-    
-    init() {
-        context = modelContainer.mainContext
-        appStateManager = AppStateManager(modelContext: modelContainer.mainContext)
-    }
+    @State var appStateManager = AppStateManager()
     
     var body: some Scene {
         MenuBarExtra {
             ClipsView(clipboardManager: appStateManager.clipboardManager, clipsStorage: appStateManager.clipsStorage, viewModel: appStateManager.clipsViewModel)
-                .modelContext(context)
         } label: {
             Image(systemName: "clipboard")
         }

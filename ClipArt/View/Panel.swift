@@ -9,13 +9,10 @@ import SwiftUI
 
 final class Panel<Content: View>: NSPanel {
     let contentRect: NSRect
-    let appStateManager: AppStateManager
     
     init(contentRect: NSRect,
-         appStateManager: AppStateManager,
          content: () -> Content) {
         self.contentRect = contentRect
-        self.appStateManager = appStateManager
         
         super.init(
             contentRect: contentRect,
@@ -39,7 +36,6 @@ final class Panel<Content: View>: NSPanel {
             VisualEffectView(material: .popover)
                 .ignoresSafeArea()
             content()
-                .modelContext(appStateManager.modelContext)
         }
         
         self.contentView = NSHostingView(rootView: contentView)

@@ -16,7 +16,7 @@ final class ClipboardManager {
     
     private let timer: DispatchSourceTimer
     private let timerInterval: DispatchTimeInterval = .milliseconds(1000)
-        
+    
     private let clipsStorage: ClipsStorage
     
     init(_ clipsStorage: ClipsStorage) {
@@ -43,6 +43,7 @@ final class ClipboardManager {
             let clips = items.compactMap { Clip(from: $0) }
             for clip in clips {
                 clipsStorage.insert(clip)
+            }
             
         }
     }
