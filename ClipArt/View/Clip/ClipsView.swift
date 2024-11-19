@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ClipsView: View {
-    public var clipboardManager: ClipboardManager
+    public let clipboardManager: ClipboardManager
+    public let clipsStorage: ClipsStorage
     @Bindable public var viewModel: ClipsViewModel
     
     @Environment(\.dismiss) private var dismiss
@@ -16,43 +17,67 @@ struct ClipsView: View {
     @State private var copyHotkeyMonitor: Any?
     @Environment(\.controlActiveState) var controlActiveState
     @FocusState var listFocus
-
+    
     var body: some View {
         if controlActiveState == .key {
-            clips
+            scrollViewReader
         }
     }
     
-    private var clips: some View {
+    private var scrollViewReader: some View {
         ScrollViewReader { proxy in
-            ClipsQueryView(searchString: viewModel.searchText) { clips in
-                List(clips, id: \.self, selection: $viewModel.selectedClip) { clip in
-                    ClipView(clip: clip)
-                        .id(clip as Clip?)
+            list
+                .task {
+                    guard let selectedClip = viewModel.selectedClip else { return }
+                    proxy.scrollTo(selectedClip, anchor: .center)
                 }
-                .scrollContentBackground(.hidden)
-                .focused($listFocus)
-            }
-            .task {
-                guard let selectedClip = viewModel.selectedClip else { return }
-                proxy.scrollTo(selectedClip, anchor: .center)
-            }
         }
-
         .searchable(text: $viewModel.searchText, placement: .toolbar)
         
-        .task {
-            addCopyHotkeyMonitor()
-            listFocus = true
-        }
+        .task { await onAppearTask() }
+        .task(id: viewModel.searchText) { await searchTextTask() }
         .onDisappear { removeCopyHotkeyMonitor() }
     }
+    
+    private var list: some View {
+        List(clipsStorage.filteredClips, id: \.self, selection: $viewModel.selectedClip) { clip in
+            ClipView(clip: clip)
+                .contextMenu {
+                    Button("Delete", systemImage: "trash.bin", role: .destructive) {
+                        clipsStorage.delete(clip)
+                    }
+                    .keyboardShortcut(.delete)
+                }
+                .id(clip as Clip?)
+        }
+        .scrollContentBackground(.hidden)
+        .focused($listFocus)
+    }
+    
+    //MARK: Tasks
+    private func onAppearTask() async {
+        addCopyHotkeyMonitor()
+        listFocus = true
+    }
+    private func searchTextTask() async {
+        guard viewModel.searchText.isEmpty == false else {
+            clipsStorage.updateSearchString("")
+            return
+        }
+        try? await Task.sleep(for: .milliseconds(250))
+        guard Task.isCancelled == false else { return }
+        clipsStorage.updateSearchString(viewModel.searchText)
+    }
+    
+    //MARK: Actions
     
     private func onSubmit(withPaste: Bool) {
         guard let selectedClip = viewModel.selectedClip else { return }
         clipboardManager.insertClip(selectedClip, withPaste: withPaste)
         dismiss()
     }
+    
+    //MARK: Hotkeys
     
     private func addCopyHotkeyMonitor() {
         copyHotkeyMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in

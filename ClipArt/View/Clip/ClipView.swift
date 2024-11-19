@@ -13,9 +13,7 @@ struct ClipView: View {
                         "Creation date: " + clip.creationDate.formatted(date: .complete, time: .complete)]
         .compactMap { $0 }
         .joined(separator: "\n")}
-    
-    @Environment(\.modelContext) var modelContext
-    
+        
     var body: some View {
         VStack {
             if let nsImage = NSImage(data: clip.content) {
@@ -30,11 +28,5 @@ struct ClipView: View {
             }
         }
         .help(help)
-        .contextMenu {
-            Button("Delete", systemImage: "trash.bin", role: .destructive) {
-                try? modelContext.transaction {  modelContext.delete(clip) }
-            }
-            .keyboardShortcut(.delete)
-        }
     }
 }

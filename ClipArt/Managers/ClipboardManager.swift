@@ -16,11 +16,11 @@ final class ClipboardManager {
     
     private let timer: DispatchSourceTimer
     private let timerInterval: DispatchTimeInterval = .milliseconds(1000)
+        
+    private let clipsStorage: ClipsStorage
     
-    private let modelContext: ModelContext
-    
-    init(modelContext: ModelContext) {
-        self.modelContext = modelContext
+    init(_ clipsStorage: ClipsStorage) {
+        self.clipsStorage = clipsStorage
         
         lastPasteboardItemString = pasteboard.pasteboardItems?.first?.string(forType: .string)
         
@@ -41,11 +41,9 @@ final class ClipboardManager {
         
         Task { @MainActor in
             let clips = items.compactMap { Clip(from: $0) }
-            try! modelContext.transaction {
-                clips.forEach { clip in
-                    modelContext.insert(clip)
-                }
-            }
+            for clip in clips {
+                clipsStorage.insert(clip)
+            
         }
     }
     

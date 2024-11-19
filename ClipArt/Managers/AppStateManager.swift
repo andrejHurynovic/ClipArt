@@ -10,10 +10,11 @@ import SwiftData
 import HotKey
 
 final class AppStateManager {
+    public let modelContext: ModelContext
+    
+    public let clipsStorage: ClipsStorage
     public let clipboardManager: ClipboardManager
     public let clipsViewModel = ClipsViewModel()
-
-    public let modelContext: ModelContext
     
     private var clipsPanel: Panel<ClipsView>!
     
@@ -21,12 +22,14 @@ final class AppStateManager {
     private var previousClipHotkey: HotKey!
     private var nextClipHotkey: HotKey!
     
-    init(modelContext: ModelContext) {
+    @MainActor init(modelContext: ModelContext) {
         self.modelContext = modelContext
-        self.clipboardManager = ClipboardManager(modelContext: modelContext)
+        self.clipsStorage = ClipsStorage(modelContext)
+        self.clipboardManager = ClipboardManager(clipsStorage)
+        
         self.clipsPanel = Panel(contentRect: NSRect.init(x: 0, y: 0, width: 1000, height: 500),
                                 appStateManager: self, content: {
-            ClipsView(clipboardManager: clipboardManager, viewModel: clipsViewModel)
+            ClipsView(clipboardManager: clipboardManager, clipsStorage: clipsStorage, viewModel: clipsViewModel)
         })
         setupHotkeys()
     }
