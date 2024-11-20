@@ -14,24 +14,24 @@ final class ClipboardManager {
     private var lastPasteboardItemString: String?
     private var lastChangeCount = NSPasteboard.general.changeCount
     
-    private let timer: DispatchSourceTimer
+    @MainActor private let timer: DispatchSourceTimer
     private let timerInterval: DispatchTimeInterval = .milliseconds(1000)
     
     private let clipsStorage: ClipsStorage
     
-    init(_ clipsStorage: ClipsStorage) {
+    @MainActor init(_ clipsStorage: ClipsStorage) {
         self.clipsStorage = clipsStorage
         
         lastPasteboardItemString = pasteboard.pasteboardItems?.first?.string(forType: .string)
         
-        timer = DispatchSource.makeTimerSource()
-        timer.schedule(deadline: .now() + timerInterval, repeating: timerInterval)
+        timer = DispatchSource.makeTimerSource(queue: .main)
+        timer.schedule(deadline: .now() + timerInterval, repeating: timerInterval, leeway: .milliseconds(500))
         timer.setEventHandler { [weak self] in self?.checkClipboard() }
         timer.activate()
     }
     
     //MARK: Clipboard actions
-    private func checkClipboard() {
+    @MainActor private func checkClipboard() {
         guard pasteboard.changeCount != lastChangeCount else { return }
         lastChangeCount = pasteboard.changeCount
         
@@ -39,13 +39,13 @@ final class ClipboardManager {
               lastPasteboardItemString != items.first?.string(forType: .string) else { return }
         lastPasteboardItemString = items.first?.string(forType: .string)
         
-        Task { @MainActor in
+        Task {
             let clips = items.compactMap { Clip(from: $0) }
             for clip in clips {
                 clipsStorage.insert(clip)
             }
-            
         }
+            
     }
     
     func insertClip(_ clip: Clip, withPaste: Bool) {
@@ -75,12 +75,12 @@ final class ClipboardManager {
     
     //MARK: Monitoring state
     private func disableMonitoring() {
-        timer.suspend()
+//        timer.suspend()
     }
     
     private func enableMonitoring() {
-        timer.resume()
-        lastChangeCount = pasteboard.changeCount
+//        timer.resume()
+//        lastChangeCount = pasteboard.changeCount
     }
     
 }

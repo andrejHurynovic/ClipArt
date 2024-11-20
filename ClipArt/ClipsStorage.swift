@@ -8,16 +8,17 @@
 import Foundation
 import SwiftData
 
+@MainActor 
 @Observable
 final class ClipsStorage {
     @ObservationIgnored let modelContainer: ModelContainer
-    @ObservationIgnored @MainActor  let modelContext: ModelContext
+    @ObservationIgnored  let modelContext: ModelContext
     
     @ObservationIgnored private var clips: [Clip] = [] { didSet { Task { await filterClips() } } }
     public var filteredClips: [Clip] = []
     private var searchString = "" { didSet { Task { await filterClips() } } }
         
-    @MainActor init() {
+    init() {
         modelContainer = try! ModelContainer(for: Clip.self)
         modelContext = modelContainer.mainContext
         Task { await fetchClips() }
@@ -25,7 +26,7 @@ final class ClipsStorage {
     
     //MARK: Fetching and updating
     
-    @MainActor private func fetchClips() async {
+    private func fetchClips() async {
         let fetchDescriptor = FetchDescriptor<Clip>(sortBy: [SortDescriptor<Clip>(\Clip.creationDate)])
         self.clips = (try? modelContext.fetch(fetchDescriptor)) ?? []
     }
@@ -39,17 +40,17 @@ final class ClipsStorage {
     
     //MARK: Insertion and deletion
     
-    @MainActor public func insert(_ clip: Clip) {
+    public func insert(_ clip: Clip) {
         modelContext.insert(clip)
         clips.insert(clip, at: 0)
     }
-    @MainActor public func delete(_ clip: Clip) {
+    public func delete(_ clip: Clip) {
         if let clipIndex = clips.firstIndex(of: clip) {
             clips.remove(at: clipIndex)
         }
         modelContext.delete(clip)
     }
-    @MainActor public func clearStorage() {
+    public func clearStorage() {
         clips = []
         try? modelContext.delete(model: Clip.self)
     }

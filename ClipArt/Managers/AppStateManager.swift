@@ -32,7 +32,7 @@ final class AppStateManager {
     }
     
     //MARK: - Hotkeys
-    private func setupHotkeys() {
+    @MainActor private func setupHotkeys() {
         let openListShortcut = KeyCombo(key: .o, modifiers: [.control, .shift])
         let previousClipShortcut = KeyCombo(key: .w, modifiers: [.control, .shift])
         let nextClipShortcut = KeyCombo(key: .s, modifiers: [.control, .shift])
@@ -42,8 +42,10 @@ final class AppStateManager {
         nextClipHotkey = HotKey(keyCombo: nextClipShortcut, keyDownHandler: {})
     }
     
-    private func openClipsView() {
-        clipsPanel.open()
+    @MainActor private func openClipsView() {
+        Task {
+            clipsPanel.open()
+        }
     }
     private func pausePreviousAndNextClipHotkeys() {
         previousClipHotkey.isPaused = true
