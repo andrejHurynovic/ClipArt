@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ClipsView: View {
     public let clipboardManager: ClipboardManager
-    public let clipsStorage: ClipsStorage
+    @Bindable public var clipsStorage: ClipsStorage
     @Bindable public var viewModel: ClipsViewModel
     
     @Environment(\.dismiss) private var dismiss
@@ -28,7 +28,7 @@ struct ClipsView: View {
         ScrollViewReader { proxy in
             list
                 .task {
-                    guard let selectedClip = viewModel.selectedClip else { return }
+                    guard let selectedClip = clipsStorage.selectedClip else { return }
                     proxy.scrollTo(selectedClip, anchor: .center)
                 }
         }
@@ -40,7 +40,7 @@ struct ClipsView: View {
     }
     
     private var list: some View {
-        List(clipsStorage.filteredClips, id: \.self, selection: $viewModel.selectedClip) { clip in
+        List(clipsStorage.filteredClips, id: \.self, selection: $clipsStorage.selectedClip) { clip in
             ClipView(clip: clip)
                 .contextMenu {
                     Button("Delete", systemImage: "trash.bin", role: .destructive) {
@@ -72,7 +72,7 @@ struct ClipsView: View {
     //MARK: Actions
     
     private func onSubmit(withPaste: Bool) {
-        guard let selectedClip = viewModel.selectedClip else { return }
+        guard let selectedClip = clipsStorage.selectedClip else { return }
         clipboardManager.insertClip(selectedClip, withPaste: withPaste)
         dismiss()
     }

@@ -30,6 +30,9 @@ final class AppStateManager {
         })
         setupHotkeys()
     }
+    @MainActor private func openClipsView() async {
+        clipsPanel.open()
+    }
     
     //MARK: - Hotkeys
     @MainActor private func setupHotkeys() {
@@ -37,16 +40,26 @@ final class AppStateManager {
         let previousClipShortcut = KeyCombo(key: .w, modifiers: [.control, .shift])
         let nextClipShortcut = KeyCombo(key: .s, modifiers: [.control, .shift])
         
-        openListHotkey = HotKey(keyCombo: openListShortcut, keyDownHandler: { [weak self] in self?.openClipsView() })
-        previousClipHotkey = HotKey(keyCombo: previousClipShortcut, keyDownHandler: {})
-        nextClipHotkey = HotKey(keyCombo: nextClipShortcut, keyDownHandler: {})
+        openListHotkey = HotKey(keyCombo: openListShortcut, keyDownHandler: { [weak self] in self?.openListHotkeyAction() })
+        previousClipHotkey = HotKey(keyCombo: previousClipShortcut, keyDownHandler: { [weak self] in self?.previousClipHotkeyAction() })
+        nextClipHotkey = HotKey(keyCombo: nextClipShortcut, keyDownHandler: { [weak self] in self?.nextClipHotkeyAction() })
     }
-    
-    @MainActor private func openClipsView() {
+    @MainActor private func openListHotkeyAction() {
+        Task { await openClipsView() }
+    }
+    @MainActor private func previousClipHotkeyAction() {
         Task {
-            clipsPanel.open()
+            await openClipsView()
+            await clipsStorage.selectPreviousClip()
         }
     }
+    @MainActor private func nextClipHotkeyAction() {
+        Task {
+            await openClipsView()
+            await clipsStorage.selectNextClip()
+        }
+    }
+
     private func pausePreviousAndNextClipHotkeys() {
         previousClipHotkey.isPaused = true
         nextClipHotkey.isPaused = true

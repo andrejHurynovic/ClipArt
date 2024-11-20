@@ -11,12 +11,14 @@ import SwiftData
 @MainActor 
 @Observable
 final class ClipsStorage {
-    @ObservationIgnored let modelContainer: ModelContainer
-    @ObservationIgnored  let modelContext: ModelContext
+    @ObservationIgnored private let modelContainer: ModelContainer
+    @ObservationIgnored private let modelContext: ModelContext
     
     @ObservationIgnored private var clips: [Clip] = [] { didSet { Task { await filterClips() } } }
     public var filteredClips: [Clip] = []
     private var searchString = "" { didSet { Task { await filterClips() } } }
+    
+    public var selectedClip: Clip?
         
     init() {
         modelContainer = try! ModelContainer(for: Clip.self)
@@ -31,6 +33,7 @@ final class ClipsStorage {
         self.clips = (try? modelContext.fetch(fetchDescriptor)) ?? []
     }
     private func filterClips() async {
+        selectedClip = nil
         guard searchString.isEmpty == false else { filteredClips = clips; return }
         filteredClips = clips.filter { $0.uiDescription?.localizedCaseInsensitiveContains(searchString) ?? false }
     }
@@ -55,4 +58,25 @@ final class ClipsStorage {
         try? modelContext.delete(model: Clip.self)
     }
     
+    //MARK: Selected Clip
+    public func selectNextClip() async {
+        guard let clip = await findNextClip() else { return }
+        selectedClip = clip
+    }
+    private func findNextClip() async -> Clip? {
+        guard let selectedClip = selectedClip,
+              let selectedClipIndex = filteredClips.firstIndex(of: selectedClip),
+              selectedClipIndex < filteredClips.count - 1 else { return filteredClips.first }
+        return filteredClips[selectedClipIndex + 1]
+    }
+    public func selectPreviousClip() async {
+        guard let clip = await findPreviousClip() else { return }
+        selectedClip = clip
+    }
+    private func findPreviousClip() async -> Clip? {
+        guard let selectedClip = selectedClip,
+              let selectedClipIndex = filteredClips.firstIndex(of: selectedClip),
+              selectedClipIndex > 0 else { return filteredClips.last }
+        return filteredClips[selectedClipIndex - 1]
+    }
 }

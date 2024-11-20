@@ -9,6 +9,5 @@ import SwiftUI
 
 @Observable
 final class ClipsViewModel: ObservableObject {
-    var selectedClip: Clip? = nil
     var searchText: String = ""
 }
