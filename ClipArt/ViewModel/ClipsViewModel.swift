@@ -8,6 +8,14 @@
 import SwiftUI
 
 @Observable
-final class ClipsViewModel: ObservableObject {
-    var searchText: String = ""
+final class ClipsViewModel {
+    public var placement: ClipsViewPlacement
+    public var searchText: String = ""
+    
+    public var copyHotkeyMonitor: Any?
+    public var modifierFlagsMonitor: Any?
+    
+    init(placement: ClipsViewPlacement) {
+        self.placement = placement
+    }
 }

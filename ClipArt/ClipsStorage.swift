@@ -29,7 +29,8 @@ final class ClipsStorage {
     //MARK: Fetching and updating
     
     private func fetchClips() async {
-        let fetchDescriptor = FetchDescriptor<Clip>(sortBy: [SortDescriptor<Clip>(\Clip.creationDate)])
+        var fetchDescriptor = FetchDescriptor<Clip>(sortBy: [SortDescriptor<Clip>(\Clip.creationDate)])
+        fetchDescriptor.fetchLimit = Constants.fetchLimit
         self.clips = (try? modelContext.fetch(fetchDescriptor)) ?? []
     }
     private func filterClips() async {

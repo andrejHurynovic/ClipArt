@@ -8,6 +8,7 @@
 import SwiftUI
 
 final class Panel<Content: View>: NSPanel {
+    var isPresented: Bool = false
     let contentRect: NSRect
     
     init(contentRect: NSRect,
@@ -50,8 +51,13 @@ final class Panel<Content: View>: NSPanel {
         setContentSize(contentRect.size)
         
         center()
+        isPresented = true
     }
     
+    override func close() {
+        super.close()
+        isPresented = false
+    }
     override func resignKey() {
         super.resignKey()
         close()
@@ -60,7 +66,6 @@ final class Panel<Content: View>: NSPanel {
     override var canBecomeKey: Bool {
         return true
     }
-    
     override var canBecomeMain: Bool {
         return true
     }

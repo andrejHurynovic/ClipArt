@@ -12,7 +12,7 @@ import HotKey
 final class AppStateManager {
     public let clipsStorage: ClipsStorage
     public let clipboardManager: ClipboardManager
-    public let clipsViewModel = ClipsViewModel()
+    public let clipsViewModel: ClipsViewModel
     
     private var clipsPanel: Panel<ClipsView>!
     
@@ -21,16 +21,21 @@ final class AppStateManager {
     private var nextClipHotkey: HotKey!
     
     @MainActor init() {
-        self.clipsStorage = ClipsStorage()
-        self.clipboardManager = ClipboardManager(clipsStorage)
+        clipsStorage = ClipsStorage()
+        clipboardManager = ClipboardManager(clipsStorage)
+        clipsViewModel = ClipsViewModel(placement: .panel)
         
-        self.clipsPanel = Panel(contentRect: NSRect.init(x: 0, y: 0, width: 1000, height: 500),
+        clipsPanel = Panel(contentRect: NSRect.init(x: 0, y: 0, width: 1000, height: 500),
                                 content: {
-            ClipsView(clipboardManager: clipboardManager, clipsStorage: clipsStorage, viewModel: clipsViewModel)
+            ClipsView(clipsStorage: clipsStorage,
+                      clipboardManager: clipboardManager,
+                      viewModel: clipsViewModel)
         })
         setupHotkeys()
     }
-    @MainActor private func openClipsView() async {
+    @MainActor private func openClipsView(placement: ClipsViewPlacement) async {
+        clipsViewModel.placement = placement
+        guard clipsPanel.isPresented == false else { return }
         clipsPanel.open()
     }
     
@@ -45,17 +50,17 @@ final class AppStateManager {
         nextClipHotkey = HotKey(keyCombo: nextClipShortcut, keyDownHandler: { [weak self] in self?.nextClipHotkeyAction() })
     }
     @MainActor private func openListHotkeyAction() {
-        Task { await openClipsView() }
+        Task { await openClipsView(placement: .panel) }
     }
     @MainActor private func previousClipHotkeyAction() {
         Task {
-            await openClipsView()
+            await openClipsView(placement: .openOnHoldPanel)
             await clipsStorage.selectPreviousClip()
         }
     }
     @MainActor private func nextClipHotkeyAction() {
         Task {
-            await openClipsView()
+            await openClipsView(placement: .openOnHoldPanel)
             await clipsStorage.selectNextClip()
         }
     }

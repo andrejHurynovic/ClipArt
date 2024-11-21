@@ -9,4 +9,5 @@ import Foundation
 
 struct Constants {
     static let popoverWindowGroupID = "\(Bundle.main.bundleURL).popover"
+    static let fetchLimit = 100
 }
