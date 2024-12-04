@@ -54,14 +54,14 @@ final class AppStateManager {
     }
     @MainActor private func previousClipHotkeyAction() {
         Task {
-            await openClipsView(placement: .openOnHoldPanel)
             await clipsStorage.selectPreviousClip()
+            await openClipsView(placement: .openOnHoldPanel)
         }
     }
     @MainActor private func nextClipHotkeyAction() {
         Task {
-            await openClipsView(placement: .openOnHoldPanel)
             await clipsStorage.selectNextClip()
+            await openClipsView(placement: .openOnHoldPanel)
         }
     }
 

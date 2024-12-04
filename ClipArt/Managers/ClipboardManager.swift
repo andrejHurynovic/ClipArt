@@ -33,20 +33,20 @@ final class ClipboardManager {
     
     //MARK: Clipboard actions
     private func checkClipboard() {
-        guard pasteboard.changeCount != lastChangeCount else { return }
-        lastChangeCount = pasteboard.changeCount
-        
-        guard let items = pasteboard.pasteboardItems,
-              lastPasteboardItemString != items.first?.string(forType: .string) else { return }
-        lastPasteboardItemString = items.first?.string(forType: .string)
-        
         Task {
+            guard pasteboard.changeCount != lastChangeCount else { return }
+            lastChangeCount = pasteboard.changeCount
+            
+            guard let items = pasteboard.pasteboardItems,
+                  lastPasteboardItemString != items.first?.string(forType: .string) else { return }
+            lastPasteboardItemString = items.first?.string(forType: .string)
+            
             let clips = items.compactMap { Clip(from: $0) }
             for clip in clips {
                 clipsStorage.insert(clip)
             }
         }
-            
+        
     }
     
     func insertClip(_ clip: Clip, withPaste: Bool) {

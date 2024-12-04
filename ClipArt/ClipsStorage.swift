@@ -34,9 +34,15 @@ final class ClipsStorage {
         self.clips = (try? modelContext.fetch(fetchDescriptor)) ?? []
     }
     private func filterClips() async {
-        selectedClip = nil
-        guard searchString.isEmpty == false else { filteredClips = clips; return }
-        filteredClips = clips.filter { $0.uiDescription?.localizedCaseInsensitiveContains(searchString) ?? false }
+        var filteredClips: [Clip]
+        if searchString.isEmpty {
+            filteredClips = clips
+        } else {
+            filteredClips = clips.filter { $0.uiDescription?.localizedCaseInsensitiveContains(searchString) ?? false }
+        }
+        guard self.filteredClips != filteredClips else { return }
+        self.filteredClips = filteredClips
+        selectedClip = filteredClips.first
     }
     public func updateSearchString(_ string: String) {
         self.searchString = string

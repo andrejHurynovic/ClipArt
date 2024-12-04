@@ -26,6 +26,13 @@ struct ClipsView: View {
     private var scrollViewReader: some View {
         ScrollViewReader { proxy in
             list
+                .task(id: clipsStorage.selectedClip, {
+                    guard !Task.isCancelled else { return }
+                    guard let selectedClip = clipsStorage.selectedClip else { return }
+                    withAnimation {
+                        proxy.scrollTo(selectedClip, anchor: .center)
+                    }
+                })
                 .task {
                     guard let selectedClip = clipsStorage.selectedClip else { return }
                     proxy.scrollTo(selectedClip, anchor: .center)
@@ -107,7 +114,7 @@ struct ClipsView: View {
     private func addModifierFlagsMonitor() {
         guard viewModel.modifierFlagsMonitor == nil else { return }
         viewModel.modifierFlagsMonitor = NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) { event in
-            guard event.keyCode == KeyCodes.control || event.keyCode == KeyCodes.shift else { return event } 
+            guard event.keyCode == KeyCodes.control || event.keyCode == KeyCodes.shift else { return event }
             onSubmit(withPaste: true)
             return nil
         }
