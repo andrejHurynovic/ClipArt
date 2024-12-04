@@ -63,10 +63,9 @@ final class ClipboardManager {
             pasteClip()
         }
     }
-    private func pasteClip() {
-//        Task {
-//            try? await Task.sleep(for: .seconds(1))
-//            print("")
+    
+    nonisolated func pasteClip() {
+        Task {
             let source = CGEventSource(stateID: .combinedSessionState)
             // Disable local keyboard events while pasting
             source?.setLocalEventsFilterDuringSuppressionState([.permitLocalMouseEvents, .permitSystemDefinedEvents],
@@ -80,7 +79,7 @@ final class ClipboardManager {
             
             keyVDown?.post(tap: .cghidEventTap)
             keyVUp?.post(tap: .cghidEventTap)
-//        }
+        }
     }
     
     //MARK: Monitoring state

@@ -76,8 +76,8 @@ struct ClipsView: View {
     
     private func onSubmit(withPaste: Bool) {
         guard let selectedClip = clipsStorage.selectedClip else { return }
-        clipboardManager.insertClip(selectedClip, withPaste: withPaste)
         dismiss()
+        clipboardManager.insertClip(selectedClip, withPaste: withPaste)
     }
     
     //MARK: Hotkeys

@@ -33,7 +33,7 @@ final class AppStateManager {
         })
         setupHotkeys()
     }
-    @MainActor public func openClipsView(placement: ClipsViewPlacement) async {
+    @MainActor private func openClipsView(placement: ClipsViewPlacement) async {
         clipsViewModel.placement = placement
         guard clipsPanel.isPresented == false else { return }
         clipsPanel.open()
@@ -45,9 +45,9 @@ final class AppStateManager {
         let previousClipShortcut = KeyCombo(key: .w, modifiers: [.control, .shift])
         let nextClipShortcut = KeyCombo(key: .s, modifiers: [.control, .shift])
         
-//        openListHotkey = HotKey(keyCombo: openListShortcut, keyDownHandler: { [weak self] in self?.openListHotkeyAction() })
-//        previousClipHotkey = HotKey(keyCombo: previousClipShortcut, keyDownHandler: { [weak self] in self?.previousClipHotkeyAction() })
-//        nextClipHotkey = HotKey(keyCombo: nextClipShortcut, keyDownHandler: { [weak self] in self?.nextClipHotkeyAction() })
+        openListHotkey = HotKey(keyCombo: openListShortcut, keyDownHandler: { [weak self] in self?.openListHotkeyAction() })
+        previousClipHotkey = HotKey(keyCombo: previousClipShortcut, keyDownHandler: { [weak self] in self?.previousClipHotkeyAction() })
+        nextClipHotkey = HotKey(keyCombo: nextClipShortcut, keyDownHandler: { [weak self] in self?.nextClipHotkeyAction() })
     }
     @MainActor private func openListHotkeyAction() {
         Task { await openClipsView(placement: .panel) }
