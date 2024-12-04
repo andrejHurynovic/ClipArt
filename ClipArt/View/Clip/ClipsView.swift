@@ -46,6 +46,9 @@ struct ClipsView: View {
                     Button("Delete", systemImage: "trash.bin", role: .destructive) {
                         clipsStorage.delete(clip)
                     }
+                    Button("Paste") {
+                        onSubmit(withPaste: true)
+                    }
                     .keyboardShortcut(.delete)
                 }
                 .id(clip as Clip?)

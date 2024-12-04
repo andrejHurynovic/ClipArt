@@ -8,18 +8,19 @@
 import AppKit
 import SwiftData
 
+@MainActor
 final class ClipboardManager {
     private let pasteboard = NSPasteboard.general
     
     private var lastPasteboardItemString: String?
     private var lastChangeCount = NSPasteboard.general.changeCount
     
-    @MainActor private let timer: DispatchSourceTimer
+    private let timer: DispatchSourceTimer
     private let timerInterval: DispatchTimeInterval = .milliseconds(1000)
     
     private let clipsStorage: ClipsStorage
     
-    @MainActor init(_ clipsStorage: ClipsStorage) {
+    init(_ clipsStorage: ClipsStorage) {
         self.clipsStorage = clipsStorage
         
         lastPasteboardItemString = pasteboard.pasteboardItems?.first?.string(forType: .string)
@@ -31,7 +32,7 @@ final class ClipboardManager {
     }
     
     //MARK: Clipboard actions
-    @MainActor private func checkClipboard() {
+    private func checkClipboard() {
         guard pasteboard.changeCount != lastChangeCount else { return }
         lastChangeCount = pasteboard.changeCount
         
@@ -63,24 +64,33 @@ final class ClipboardManager {
         }
     }
     private func pasteClip() {
-        let keyVDown = CGEvent(keyboardEventSource: nil, virtualKey: 9, keyDown: true)
-        let keyVUp = CGEvent(keyboardEventSource: nil, virtualKey: 9, keyDown: false)
-        
-        keyVDown?.flags = .maskCommand
-        keyVUp?.flags = .maskCommand
-        
-        keyVDown?.post(tap: .cghidEventTap)
-        keyVUp?.post(tap: .cghidEventTap)
+//        Task {
+//            try? await Task.sleep(for: .seconds(1))
+//            print("")
+            let source = CGEventSource(stateID: .combinedSessionState)
+            // Disable local keyboard events while pasting
+            source?.setLocalEventsFilterDuringSuppressionState([.permitLocalMouseEvents, .permitSystemDefinedEvents],
+                                                               state: .eventSuppressionStateSuppressionInterval)
+            
+            let keyVDown = CGEvent(keyboardEventSource: source, virtualKey: 9, keyDown: true)
+            let keyVUp = CGEvent(keyboardEventSource: source, virtualKey: 9, keyDown: false)
+            
+            keyVDown?.flags = .maskCommand
+            keyVUp?.flags = .maskCommand
+            
+            keyVDown?.post(tap: .cghidEventTap)
+            keyVUp?.post(tap: .cghidEventTap)
+//        }
     }
     
     //MARK: Monitoring state
     private func disableMonitoring() {
-//        timer.suspend()
+        timer.suspend()
     }
     
     private func enableMonitoring() {
-//        timer.resume()
-//        lastChangeCount = pasteboard.changeCount
+        timer.resume()
+        lastChangeCount = pasteboard.changeCount
     }
     
 }
