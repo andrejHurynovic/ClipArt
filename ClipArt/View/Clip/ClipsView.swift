@@ -8,125 +8,74 @@
 import SwiftUI
 
 struct ClipsView: View {
-    @Bindable public var clipsStorage: ClipsStorage
-    public let clipboardManager: ClipboardManager
     @Bindable public var viewModel: ClipsViewModel
     
     @Environment(\.controlActiveState) var controlActiveState
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.isSearching) private var isSearching
     
     @FocusState var listFocus
+    @State var searchFocus: Bool = false
     
     var body: some View {
-        if controlActiveState == .key {
-            scrollViewReader
-        }
+        if controlActiveState == .key { scrollViewReader }
     }
     
     private var scrollViewReader: some View {
         ScrollViewReader { proxy in
             list
-                .task(id: clipsStorage.selectedClip, {
-                    guard !Task.isCancelled else { return }
-                    guard let selectedClip = clipsStorage.selectedClip else { return }
-                    withAnimation {
-                        proxy.scrollTo(selectedClip, anchor: .center)
-                    }
-                })
+                .task(id: viewModel.clipsStorage.selectedClip) { await scrollToCurrentClip(animation: .default, in: proxy) }
                 .task {
-                    guard let selectedClip = clipsStorage.selectedClip else { return }
-                    proxy.scrollTo(selectedClip, anchor: .center)
+                    await passDismissIntoViewModel()
+                    await scrollToCurrentClip(animation: nil, in: proxy)
                 }
-                .onChange(of: viewModel.placement) { addHotkeyMonitors() }
         }
-        .searchable(text: $viewModel.searchText, placement: .toolbar)
+        .scrollContentBackground(.hidden)
+
+        .focused($listFocus)
         
-        .task { await onAppearTask() }
-        .task(id: viewModel.searchText) { await searchTextTask() }
-        .onDisappear { removeHotkeyMonitors() }
+        .searchable(text: $viewModel.searchText, isPresented: $searchFocus, placement: .toolbar)
+        
+        .onDeleteCommand { viewModel.deleteClip() }
+        
+        .task { await onAppear() }
+        .onDisappear { viewModel.onDisappear() }
+
+        .task(id: viewModel.searchText) { await viewModel.searchTextTask() }
+        .task(id: searchFocus) { await viewModel.searchFocusUpdated(searchFocus) }
     }
     
     private var list: some View {
-        List(clipsStorage.filteredClips, id: \.self, selection: $clipsStorage.selectedClip) { clip in
+        List(viewModel.clipsStorage.filteredClips, id: \.self, selection: $viewModel.clipsStorage.selectedClip) { clip in
             ClipView(clip: clip)
                 .contextMenu {
                     Button("Delete", systemImage: "trash.bin", role: .destructive) {
-                        clipsStorage.delete(clip)
+                        viewModel.clipsStorage.delete(clip)
                     }
                     Button("Paste") {
-                        onSubmit(withPaste: true)
+                        viewModel.clipsStorage.selectedClip = clip
+                        viewModel.onSubmit(withPaste: true)
                     }
-                    .keyboardShortcut(.delete)
                 }
-                .id(clip as Clip?)
         }
-        .scrollContentBackground(.hidden)
-        .focused($listFocus)
+        
     }
     
-    //MARK: Tasks
-    private func onAppearTask() async {
-        addHotkeyMonitors()
+    //MARK: - Tasks
+    private func passDismissIntoViewModel() async {
+        guard viewModel.dismiss == nil else { return }
+        viewModel.dismiss = dismiss
+    }
+    private func scrollToCurrentClip(animation: Animation?,
+                                     in proxy: ScrollViewProxy) async {
+        guard !Task.isCancelled else { return }
+        withAnimation(animation) {
+            proxy.scrollTo(viewModel.clipsStorage.selectedClip, anchor: .center)
+        }
+    }
+    private func onAppear() async {
+        viewModel.onAppear()
         listFocus = true
     }
-    private func searchTextTask() async {
-        guard viewModel.searchText.isEmpty == false else {
-            clipsStorage.updateSearchString("")
-            return
-        }
-        try? await Task.sleep(for: .milliseconds(250))
-        guard Task.isCancelled == false else { return }
-        clipsStorage.updateSearchString(viewModel.searchText)
-    }
     
-    //MARK: Actions
-    
-    private func onSubmit(withPaste: Bool) {
-        guard let selectedClip = clipsStorage.selectedClip else { return }
-        dismiss()
-        clipboardManager.insertClip(selectedClip, withPaste: withPaste)
-    }
-    
-    //MARK: Hotkeys
-    
-    private func addHotkeyMonitors() {
-        addCopyHotkeyMonitor()
-        if viewModel.placement == .openOnHoldPanel {
-            addModifierFlagsMonitor()
-        }
-    }
-    private func removeHotkeyMonitors() {
-        removeCopyHotkeyMonitor()
-        if viewModel.placement == .openOnHoldPanel {
-            removeModifierFlagsMonitor()
-        }
-    }
-    
-    private func addCopyHotkeyMonitor() {
-        guard viewModel.copyHotkeyMonitor == nil else { return }
-        viewModel.copyHotkeyMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
-            guard event.modifierFlags.contains(.command) && event.keyCode == KeyCodes.c else { return event }
-            
-            onSubmit(withPaste: false)
-            return nil
-        }
-    }
-    private func addModifierFlagsMonitor() {
-        guard viewModel.modifierFlagsMonitor == nil else { return }
-        viewModel.modifierFlagsMonitor = NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) { event in
-            guard event.keyCode == KeyCodes.control || event.keyCode == KeyCodes.shift else { return event }
-            onSubmit(withPaste: true)
-            return nil
-        }
-    }
-    private func removeCopyHotkeyMonitor() {
-        guard let copyHotkeyMonitor = viewModel.copyHotkeyMonitor else { return }
-        NSEvent.removeMonitor(copyHotkeyMonitor)
-        self.viewModel.copyHotkeyMonitor = nil
-    }
-    private func removeModifierFlagsMonitor() {
-        guard let modifierFlagsMonitor = viewModel.modifierFlagsMonitor else { return }
-        NSEvent.removeMonitor(modifierFlagsMonitor)
-        self.viewModel.modifierFlagsMonitor = nil
-    }
 }

@@ -26,7 +26,7 @@ final class ClipsStorage {
         Task { await fetchClips() }
     }
     
-    //MARK: Fetching and updating
+    //MARK: - Fetching and updating
     
     private func fetchClips() async {
         var fetchDescriptor = FetchDescriptor<Clip>(sortBy: [SortDescriptor<Clip>(\Clip.creationDate)])
@@ -48,17 +48,17 @@ final class ClipsStorage {
         self.searchString = string
     }
     
-    //MARK: Insertion and deletion
+    //MARK: - Insertion and deletion
     
     public func insert(_ clip: Clip) {
         modelContext.insert(clip)
         clips.insert(clip, at: 0)
     }
     public func delete(_ clip: Clip) {
-        if let clipIndex = clips.firstIndex(of: clip) {
-            clips.remove(at: clipIndex)
-        }
+        guard let clipIndex = clips.firstIndex(of: clip) else { return }
+        clips.remove(at: clipIndex)
         modelContext.delete(clip)
+        
     }
     public func clearStorage() {
         clips = []

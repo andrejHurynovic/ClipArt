@@ -7,6 +7,7 @@
 
 struct KeyCodes {
     static let c:       UInt16 = 0x08
-    static let control: UInt16 = 0x3B
+    static let delete:   UInt16 = 0x33
     static let shift:   UInt16 = 0x38
+    static let control: UInt16 = 0x3B
 }

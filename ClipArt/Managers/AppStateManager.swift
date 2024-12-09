@@ -23,18 +23,18 @@ final class AppStateManager {
     @MainActor init() {
         clipsStorage = ClipsStorage()
         clipboardManager = ClipboardManager(clipsStorage)
-        clipsViewModel = ClipsViewModel(placement: .panel)
+        clipsViewModel = ClipsViewModel(placement: .panel,
+                                        clipsStorage: clipsStorage,
+                                        clipboardManager: clipboardManager)
         
         clipsPanel = Panel(contentRect: NSRect.init(x: 0, y: 0, width: 1000, height: 500),
                                 content: {
-            ClipsView(clipsStorage: clipsStorage,
-                      clipboardManager: clipboardManager,
-                      viewModel: clipsViewModel)
+            ClipsView(viewModel: clipsViewModel)
         })
         setupHotkeys()
     }
     @MainActor private func openClipsView(placement: ClipsViewPlacement) async {
-        clipsViewModel.placement = placement
+        clipsViewModel.setPlacement(placement)
         guard clipsPanel.isPresented == false else { return }
         clipsPanel.open()
     }

@@ -14,9 +14,9 @@ struct ClipArtApp: App {
 
     var body: some Scene {
         MenuBarExtra {
-            ClipsView(clipsStorage: appStateManager.clipsStorage,
-                      clipboardManager: appStateManager.clipboardManager,
-                      viewModel: ClipsViewModel(placement: .menuBar))
+            ClipsView(viewModel: ClipsViewModel(placement: .menuBar,
+                      clipsStorage: appStateManager.clipsStorage,
+                      clipboardManager: appStateManager.clipboardManager))
         } label: {
             Image(systemName: "clipboard")
         }
