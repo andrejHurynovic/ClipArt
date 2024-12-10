@@ -96,7 +96,7 @@ final class ClipsViewModel {
     public func deleteClip(_ clip: Clip? = nil) {
         func _deleteClip(_ clip: Clip? = clipsStorage.selectedClip) {
             guard let clip = clip ?? clipsStorage.selectedClip else { return }
-            clipsStorage.delete(clip)
+            Task { await clipsStorage.delete(clip) }
        }
         _deleteClip(clip)
     }

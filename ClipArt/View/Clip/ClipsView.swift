@@ -46,11 +46,11 @@ struct ClipsView: View {
     }
     
     private var list: some View {
-        List(viewModel.clipsStorage.filteredClips, id: \.self, selection: $viewModel.clipsStorage.selectedClip) { clip in
+        List(viewModel.clipsStorage.clips, id: \.self, selection: $viewModel.clipsStorage.selectedClip) { clip in
             ClipView(clip: clip)
                 .contextMenu {
                     Button("Delete", systemImage: "trash.bin", role: .destructive) {
-                        viewModel.clipsStorage.delete(clip)
+                        Task { await viewModel.clipsStorage.delete(clip) }
                     }
                     Button("Paste") {
                         viewModel.clipsStorage.selectedClip = clip
