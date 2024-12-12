@@ -30,8 +30,10 @@ final class ClipsViewModel {
     @MainActor public func onAppear() {
         addHotkeyMonitors()
     }
-    public func onDisappear() {
+    @MainActor public func onDisappear() {
         removeHotkeyMonitors()
+        searchText.removeAll()
+        clipsStorage.updateSearchString("")
     }
     
     @MainActor public func setPlacement(_ placement: ClipsViewPlacement) {
@@ -91,9 +93,8 @@ final class ClipsViewModel {
         dismiss()
         clipboardManager.insertClip(selectedClip, withPaste: withPaste)
     }
-    //MARK: - Actions
-    @MainActor
-    public func deleteClip(_ clip: Clip? = nil) {
+
+    @MainActor public func deleteClip(_ clip: Clip? = nil) {
         func _deleteClip(_ clip: Clip? = clipsStorage.selectedClip) {
             guard let clip = clip ?? clipsStorage.selectedClip else { return }
             Task { await clipsStorage.delete(clip) }
@@ -111,8 +112,7 @@ final class ClipsViewModel {
         }
         clipsStorage.updateSearchString(searchText)
     }
-    @MainActor public func searchFocusUpdated(_ newValue: Bool) async {
-        guard newValue else { return }
+    @MainActor public func onSearchFocused() async {
         placement = .panel
         removeModifierFlagsMonitor()
     }

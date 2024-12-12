@@ -37,8 +37,10 @@ final class ClipsStorage {
         let clips = (try? modelContext.fetch(fetchDescriptor)) ?? []
         guard self.clips != clips else { return }
         self.clips = clips
+        self.selectedClip = clips.first
     }
     public func updateSearchString(_ string: String) {
+        guard searchString != string else { return }
         self.searchString = string
         Task { await fetchClips() }
     }

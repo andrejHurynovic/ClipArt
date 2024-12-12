@@ -24,10 +24,10 @@ struct ClipsView: View {
     private var scrollViewReader: some View {
         ScrollViewReader { proxy in
             list
-                .task(id: viewModel.clipsStorage.selectedClip) { await scrollToCurrentClip(animation: .default, in: proxy) }
+                .task(id: viewModel.clipsStorage.selectedClip) { scrollToCurrentClip(animation: .default, in: proxy) }
                 .task {
                     await passDismissIntoViewModel()
-                    await scrollToCurrentClip(animation: nil, in: proxy)
+                    scrollToCurrentClip(animation: nil, in: proxy)
                 }
         }
         .scrollContentBackground(.hidden)
@@ -42,7 +42,7 @@ struct ClipsView: View {
         .onDisappear { viewModel.onDisappear() }
 
         .task(id: viewModel.searchText) { await viewModel.searchTextTask() }
-        .task(id: searchFocus) { await viewModel.searchFocusUpdated(searchFocus) }
+        .task(id: searchFocus) { searchFocus ? await viewModel.onSearchFocused() : { listFocus = true }() }
     }
     
     private var list: some View {
@@ -67,7 +67,7 @@ struct ClipsView: View {
         viewModel.dismiss = dismiss
     }
     private func scrollToCurrentClip(animation: Animation?,
-                                     in proxy: ScrollViewProxy) async {
+                                     in proxy: ScrollViewProxy) {
         guard !Task.isCancelled else { return }
         withAnimation(animation) {
             proxy.scrollTo(viewModel.clipsStorage.selectedClip, anchor: .center)
