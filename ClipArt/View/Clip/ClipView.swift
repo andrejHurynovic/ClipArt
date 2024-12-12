@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ClipView: View {
     let clip: Clip
-    var help: String { [clip.uiDescription,
+    var help: String { [clip.textDescription,
                         "Creation date: " + clip.creationDate.formatted(date: .complete, time: .complete)]
         .compactMap { $0 }
         .joined(separator: "\n")}
@@ -20,8 +20,9 @@ struct ClipView: View {
                 Image(nsImage: nsImage)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
+                    .frame(height: 100)
             }
-            if let description = clip.uiDescription {
+            if let description = clip.textDescription?.replacingOccurrences(of: "\n", with: " ") {
                 Text(description)
                     .truncationMode(.middle)
                     .lineLimit(1)

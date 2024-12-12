@@ -122,6 +122,7 @@
 				3B92AAAA2CCE6D1A007C8CD4 /* Models */,
 				3BD3EDC62CCE7171003729B0 /* View */,
 				3BC16A052CED1ED9000897C0 /* ViewModel */,
+				3B5CDA912D0B0C9000CA8D07 /* Extensions */,
 				21527E242C656979006B5982 /* Preview Content */,
 				21527E222C656979006B5982 /* Assets.xcassets */,
 				21527E272C656979006B5982 /* ClipArt.entitlements */,
@@ -135,6 +136,13 @@
 				21527E252C656979006B5982 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		3B5CDA912D0B0C9000CA8D07 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		3B92AAAA2CCE6D1A007C8CD4 /* Models */ = {

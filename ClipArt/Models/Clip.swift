@@ -13,7 +13,7 @@ final class Clip {
     var creationDate = Date()
     private var typeRawValue: String
     var content: Data
-    var uiDescription: String?
+    var textDescription: String?
     
     init?(from item: NSPasteboardItem) {
         guard let itemType = item.types.first,
@@ -21,7 +21,7 @@ final class Clip {
         
         self.typeRawValue = itemType.rawValue
         self.content = itemData
-        self.uiDescription = item.string(forType: .string)
+        self.textDescription = item.string(forType: .string)
     }
 }
 

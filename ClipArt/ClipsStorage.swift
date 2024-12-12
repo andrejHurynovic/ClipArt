@@ -46,7 +46,7 @@ final class ClipsStorage {
     }
     private func createDescriptor(for type: FetchType) -> FetchDescriptor<Clip> {
         var fetchDescriptor = FetchDescriptor<Clip>(sortBy: [SortDescriptor<Clip>(\Clip.creationDate, order: .reverse)])
-        fetchDescriptor.predicate = searchString.isEmpty ? nil : #Predicate { $0.uiDescription?.localizedStandardContains(searchString) ?? false }
+        fetchDescriptor.predicate = searchString.isEmpty ? nil : #Predicate { $0.textDescription?.localizedStandardContains(searchString) ?? false }
         
         switch type {
         case .all:
@@ -68,7 +68,7 @@ final class ClipsStorage {
     
     public func insert(_ clip: Clip) {
         modelContext.insert(clip)
-        guard searchString.isEmpty || (clip.uiDescription?.localizedStandardContains(searchString) ?? false) else { return }
+        guard searchString.isEmpty || (clip.textDescription?.localizedStandardContains(searchString) ?? false) else { return }
         clips.insert(clip, at: 0)
     }
     public func delete(_ clip: Clip) async {
