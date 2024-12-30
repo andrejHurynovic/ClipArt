@@ -13,6 +13,7 @@ struct ClipsView: View {
     @Environment(\.controlActiveState) var controlActiveState
     @Environment(\.dismiss) private var dismiss
     @Environment(\.isSearching) private var isSearching
+    @Environment(\.openSettings) private var openSettings
     
     @FocusState var listFocus
     @State var searchFocus: Bool = false
@@ -35,6 +36,8 @@ struct ClipsView: View {
         .focused($listFocus)
         
         .searchable(text: $viewModel.searchText, isPresented: $searchFocus, placement: .toolbar)
+        
+        .toolbar { Button("Settings", systemImage: "gear") { openSettings() } }
         
         .onDeleteCommand { viewModel.deleteClip() }
         

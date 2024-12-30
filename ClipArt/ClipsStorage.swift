@@ -67,7 +67,9 @@ final class ClipsStorage {
     //MARK: - Insertion and deletiona
     
     public func insert(_ clip: Clip) {
-        modelContext.insert(clip)
+        try? modelContext.transaction {
+            modelContext.insert(clip)
+        }
         guard searchString.isEmpty || (clip.textDescription?.localizedStandardContains(searchString) ?? false) else { return }
         clips.insert(clip, at: 0)
     }

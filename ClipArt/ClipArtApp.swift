@@ -21,5 +21,9 @@ struct ClipArtApp: App {
             Image(systemName: "clipboard")
         }
         .menuBarExtraStyle(.window)
+        
+        Settings {
+            SettingsView()
+        }
     }
 }

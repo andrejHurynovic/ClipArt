@@ -19,6 +19,7 @@ final class AppStateManager {
     private var openListHotkey: HotKey!
     private var previousClipHotkey: HotKey!
     private var nextClipHotkey: HotKey!
+    private var clipSwitchOnFirstHotkeyPress: Bool { UserDefaults.standard.bool(forKey: UserDefaults.Keys.clipSwitchOnFirstHotkeyPress) }
     
     @MainActor init() {
         clipsStorage = ClipsStorage()
@@ -54,13 +55,17 @@ final class AppStateManager {
     }
     @MainActor private func previousClipHotkeyAction() {
         Task {
-            await clipsStorage.selectPreviousClip()
+            if clipsPanel.isPresented || clipSwitchOnFirstHotkeyPress {
+                await clipsStorage.selectPreviousClip()
+            }
             await openClipsView(placement: .openOnHoldPanel)
         }
     }
     @MainActor private func nextClipHotkeyAction() {
         Task {
-            await clipsStorage.selectNextClip()
+            if clipsPanel.isPresented || clipSwitchOnFirstHotkeyPress {
+                await clipsStorage.selectNextClip()
+            }
             await openClipsView(placement: .openOnHoldPanel)
         }
     }
